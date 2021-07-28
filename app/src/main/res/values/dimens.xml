@@ -6,4 +6,5 @@
     <dimen name="pic_movie_width">100dp</dimen>
     <dimen name="pic_movie_height">100dp</dimen>
     <dimen name="text_size_on_card">15sp</dimen>
+    <dimen name="card_elevation">10dp</dimen>
 </resources>
