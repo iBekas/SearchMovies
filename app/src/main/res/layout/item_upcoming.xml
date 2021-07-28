@@ -18,14 +18,14 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/movie_img"
+            android:id="@+id/movie_img_upcoming"
             android:layout_width="@dimen/pic_movie_width"
             android:layout_height="@dimen/pic_movie_height"
             android:layout_weight="1"
             android:src="@mipmap/ic_launcher" />
 
         <TextView
-            android:id="@+id/movie_title"
+            android:id="@+id/movie_title_upcoming"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -35,7 +35,7 @@
             tools:text="Лучший фильм" />
 
         <TextView
-            android:id="@+id/movie_release_year"
+            android:id="@+id/movie_expect_data_upcoming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
