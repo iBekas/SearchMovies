@@ -9,7 +9,6 @@
     tools:context=".view.MainActivity"
     tools:showIn="@layout/content_main">
 
-    //не забыть поменять ширину
     <FrameLayout
         android:id="@+id/now_playing_container"
         android:layout_width="match_parent"

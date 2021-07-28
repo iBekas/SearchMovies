@@ -2,6 +2,6 @@ package search.finder.searchmovies.viewmodel
 
 import androidx.lifecycle.ViewModel
 
-class MainViewModel : ViewModel() {
+class NowPlayingViewModel : ViewModel() {
     // TODO: Implement the ViewModel
 }
