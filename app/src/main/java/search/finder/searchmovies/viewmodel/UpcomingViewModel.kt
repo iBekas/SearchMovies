@@ -17,7 +17,7 @@ class UpcomingViewModel(private val liveDataObserver : MutableLiveData<AppState>
         Thread{
             liveDataObserver.postValue(AppState.Loading)
             Thread.sleep(2000)
-            liveDataObserver.postValue(AppState.Success(repository.getMovieFromLocal()))
+            liveDataObserver.postValue(AppState.Success(repository.getMovieFromLocalUpcoming()))
         }.start()
     }
 }

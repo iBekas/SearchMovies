@@ -10,14 +10,14 @@ class NowPlayingViewModel(private val liveDataObserver : MutableLiveData<AppStat
 ) : ViewModel() {
     fun getLiveData()=liveDataObserver
 
-    fun getMovie()=getDataFromLocalSource()
+    fun getMovieNow()=getDataFromLocalSource()
 
 
     private fun getDataFromLocalSource(){
         Thread{
             liveDataObserver.postValue(AppState.Loading)
             Thread.sleep(2000)
-            liveDataObserver.postValue(AppState.Success(repository.getMovieFromLocal()))
+            liveDataObserver.postValue(AppState.Success(repository.getMovieFromLocalNow()))
         }.start()
     }
 }
