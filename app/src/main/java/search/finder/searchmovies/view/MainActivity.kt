@@ -8,12 +8,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.ContentMainBinding
-import search.finder.searchmovies.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
     val navigation = Navigation(supportFragmentManager)
-    lateinit var binding: ContentMainBinding
+    private lateinit var binding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +33,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        return super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.context_menu, menu)
+        return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
