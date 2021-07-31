@@ -10,7 +10,7 @@ class UpcomingViewModel(private val liveDataObserver : MutableLiveData<AppState>
 ) : ViewModel() {
     fun getLiveData()=liveDataObserver
 
-    fun getMovie()=getDataFromLocalSource()
+    fun getMovieUpcoming()=getDataFromLocalSource()
 
 
     private fun getDataFromLocalSource(){

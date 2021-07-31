@@ -1,21 +1,25 @@
 package search.finder.searchmovies.view
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import search.finder.searchmovies.R
-import search.finder.searchmovies.databinding.NowPlayingFragmentBinding
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import search.finder.searchmovies.databinding.UpcomingFragmentBinding
+import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.UpcomingViewModel
 
 class UpcomingFragment : Fragment() {
 
+    private val upcomingFragmentAdapter: UpcomingFragmentAdapter = UpcomingFragmentAdapter()
+
     private lateinit var navigation: Navigation
     private lateinit var viewModel: UpcomingViewModel
+
     private var _binding: UpcomingFragmentBinding? = null
     private val binding: UpcomingFragmentBinding
     get(): UpcomingFragmentBinding{
@@ -45,7 +49,28 @@ class UpcomingFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(UpcomingViewModel::class.java)
-        // TODO: Use the ViewModel
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+        setupRecyclerView()
+        viewModel.getMovieUpcoming()
+    }
+
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Error -> TODO()
+            is AppState.Success -> {
+                binding.upcomingPlayingLoading.visibility = View.GONE
+                binding.rvMoviesUpcoming.adapter = upcomingFragmentAdapter
+                upcomingFragmentAdapter.setMovies(appState.dataMovies)
+            }
+            is AppState.Loading -> {
+                binding.upcomingPlayingLoading.visibility = View.GONE
+            }
+        }
+    }
+
+    private fun setupRecyclerView() {
+        val layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.rvMoviesUpcoming.layoutManager = layoutManager
     }
 
 }
