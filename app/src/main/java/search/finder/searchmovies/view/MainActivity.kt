@@ -7,16 +7,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import search.finder.searchmovies.R
+import search.finder.searchmovies.databinding.ContentMainBinding
 import search.finder.searchmovies.databinding.MainActivityBinding
 
 class MainActivity : AppCompatActivity() {
 
     val navigation = Navigation(supportFragmentManager)
-    lateinit var binding: MainActivityBinding
+    lateinit var binding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = MainActivityBinding.inflate(layoutInflater)
+        binding = ContentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction().replace(R.id.now_playing_container, NowPlayingFragment.newInstance()).commit()
@@ -27,10 +28,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initToolbar(): Toolbar {
-        val toolbar: Toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
+        setSupportActionBar(binding.toolbar)
 //        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        return toolbar
+        return binding.toolbar
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

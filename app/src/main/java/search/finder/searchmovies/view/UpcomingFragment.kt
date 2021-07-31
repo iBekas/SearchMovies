@@ -15,8 +15,12 @@ import search.finder.searchmovies.viewmodel.UpcomingViewModel
 class UpcomingFragment : Fragment() {
 
     private lateinit var navigation: Navigation
-    private lateinit var binding: UpcomingFragmentBinding
     private lateinit var viewModel: UpcomingViewModel
+    private var _binding: UpcomingFragmentBinding? = null
+    private val binding: UpcomingFragmentBinding
+    get(): UpcomingFragmentBinding{
+        return _binding!!
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -24,12 +28,17 @@ class UpcomingFragment : Fragment() {
         navigation = activity.navigation
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
         fun newInstance() = UpcomingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = UpcomingFragmentBinding.inflate(inflater, container, false)
+        _binding = UpcomingFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 

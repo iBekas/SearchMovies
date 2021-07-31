@@ -7,13 +7,19 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.NowPlayingFragmentBinding
+import search.finder.searchmovies.databinding.UpcomingFragmentBinding
 import search.finder.searchmovies.viewmodel.NowPlayingViewModel
 
 class NowPlayingFragment : Fragment() {
 
     private lateinit var navigation: Navigation
-    private lateinit var binding: NowPlayingFragmentBinding
     private lateinit var viewModel: NowPlayingViewModel
+
+    private var _binding: NowPlayingFragmentBinding? = null
+    private val binding: NowPlayingFragmentBinding
+        get(): NowPlayingFragmentBinding {
+            return _binding!!
+        }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -21,13 +27,17 @@ class NowPlayingFragment : Fragment() {
         navigation = activity.navigation
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
     companion object {
         fun newInstance() = NowPlayingFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = NowPlayingFragmentBinding.inflate(inflater, container, false)
-        setHasOptionsMenu(true)
+        _binding = NowPlayingFragmentBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -36,14 +46,4 @@ class NowPlayingFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(NowPlayingViewModel::class.java)
         // TODO: Use the ViewModel
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        super.onCreateOptionsMenu(menu, inflater)
-        inflater.inflate(R.menu.context_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return super.onOptionsItemSelected(item)
-    }
-
 }
