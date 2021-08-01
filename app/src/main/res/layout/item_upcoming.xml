@@ -22,7 +22,7 @@
             android:layout_width="@dimen/pic_movie_width"
             android:layout_height="@dimen/pic_movie_height"
             android:layout_weight="1"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@drawable/movie_example_two" />
 
         <TextView
             android:id="@+id/movie_title_upcoming"
