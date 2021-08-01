@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.Movie
 
-class NowPlayingFragmentAdapter: RecyclerView.Adapter<NowPlayingFragmentAdapter.NowPlayingHolder>() {
+class NowPlayingFragmentAdapter(var onItemViewClickListener: OnItemViewClickListener): RecyclerView.Adapter<NowPlayingFragmentAdapter.NowPlayingHolder>() {
 
     private lateinit var moviesData: List<Movie>
 
@@ -36,6 +36,7 @@ class NowPlayingFragmentAdapter: RecyclerView.Adapter<NowPlayingFragmentAdapter.
             itemView.findViewById<TextView>(R.id.movie_title).text = movie.title
             itemView.findViewById<TextView>(R.id.movie_release_year).text = movie.releaseYear.toString()
             itemView.findViewById<TextView>(R.id.movie_votes_average).text = movie.vote.toString()
+            itemView.setOnClickListener{onItemViewClickListener?.onItemViewClick(movie)}
         }
     }
 }

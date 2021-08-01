@@ -7,7 +7,8 @@
     android:layout_gravity="center"
     android:layout_marginStart="16dp"
     android:layout_marginEnd="16dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/dark_grey">
 
     <ImageView
         android:id="@+id/movie_img_detail"
@@ -57,6 +58,7 @@
             android:layout_marginTop="@dimen/margin_fab"
             android:layout_marginBottom="@dimen/margin_fab"
             android:scaleType="center"
+            android:tint="@null"
             android:src="@drawable/ic_favorite"
             app:elevation="0dp"
             app:fabSize="mini" />

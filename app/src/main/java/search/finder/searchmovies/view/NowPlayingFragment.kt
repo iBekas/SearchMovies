@@ -7,14 +7,29 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.NowPlayingFragmentBinding
+import search.finder.searchmovies.model.Movie
 import search.finder.searchmovies.view.adapter.NowPlayingFragmentAdapter
+import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.NowPlayingViewModel
 
 class NowPlayingFragment : Fragment() {
 
-    private val nowPlayingFragmentAdapter: NowPlayingFragmentAdapter = NowPlayingFragmentAdapter()
+    private val nowPlayingFragmentAdapter: NowPlayingFragmentAdapter = NowPlayingFragmentAdapter(object: OnItemViewClickListener{
+        override fun onItemViewClick(movie: Movie) {
+            val manager = activity?.supportFragmentManager
+            if(manager != null){
+                val bundle = Bundle()
+                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+                manager.beginTransaction()
+                    .add(R.id.now_playing_container, MovieDetailFragment.newInstance(bundle))
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
+            }
+        }
+    })
     private lateinit var navigation: Navigation
     private lateinit var viewModel: NowPlayingViewModel
 

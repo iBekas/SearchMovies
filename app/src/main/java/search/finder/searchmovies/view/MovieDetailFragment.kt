@@ -45,7 +45,7 @@ class MovieDetailFragment : Fragment() {
     private fun setData(movie: Movie){
         binding.movieTitleDetail.text = movie.title
         binding.movieDescDetail.text = movie.movieDescription
-        binding.movieReleaseYearDetail.text = (movie.releaseYear ?: movie.expectData) as CharSequence?
+        binding.movieReleaseYearDetail.text = if (movie.releaseYear != null) movie.releaseYear.toString() else movie.expectData.toString()
         //выше подсказка студии, ее стоит проверить
         binding.movieVotesAverageDetail.text = if(movie.vote != null) movie.vote.toString() else "0.0"
     }
