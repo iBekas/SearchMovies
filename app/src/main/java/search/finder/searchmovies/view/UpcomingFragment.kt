@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import search.finder.searchmovies.databinding.UpcomingFragmentBinding
+import search.finder.searchmovies.view.adapter.UpcomingFragmentAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.UpcomingViewModel
 

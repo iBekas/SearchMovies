@@ -1,4 +1,4 @@
-package search.finder.searchmovies.view
+package search.finder.searchmovies.view.adapter
 
 import android.view.LayoutInflater
 import android.view.View

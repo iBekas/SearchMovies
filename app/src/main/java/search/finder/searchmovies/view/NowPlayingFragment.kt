@@ -6,12 +6,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.NowPlayingFragmentBinding
-import search.finder.searchmovies.databinding.UpcomingFragmentBinding
+import search.finder.searchmovies.view.adapter.NowPlayingFragmentAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.NowPlayingViewModel
 
