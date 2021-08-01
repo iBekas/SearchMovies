@@ -85,7 +85,7 @@ class NowPlayingFragment : Fragment() {
                 nowPlayingFragmentAdapter.setMovies(appState.dataMovies)
             }
             is AppState.Loading -> {
-                binding.nowPlayingLoading.visibility = View.GONE
+                binding.nowPlayingLoading.visibility = View.VISIBLE
             }
         }
     }

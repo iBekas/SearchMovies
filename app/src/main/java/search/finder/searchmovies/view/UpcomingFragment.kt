@@ -84,7 +84,7 @@ class UpcomingFragment : Fragment() {
                 upcomingFragmentAdapter.setMovies(appState.dataMovies)
             }
             is AppState.Loading -> {
-                binding.upcomingPlayingLoading.visibility = View.GONE
+                binding.upcomingPlayingLoading.visibility = View.VISIBLE
             }
         }
     }
