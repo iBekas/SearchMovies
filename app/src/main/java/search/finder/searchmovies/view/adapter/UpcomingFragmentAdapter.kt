@@ -8,13 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.Movie
 
-class UpcomingFragmentAdapter: RecyclerView.Adapter<UpcomingFragmentAdapter.UpcomingHolder>() {
+class UpcomingFragmentAdapter(var onItemViewClickListener: OnItemViewClickListener?): RecyclerView.Adapter<UpcomingFragmentAdapter.UpcomingHolder>() {
 
     private lateinit var moviesData: List<Movie>
 
     fun setMovies(list: List<Movie>){
         moviesData = list
         notifyDataSetChanged()
+    }
+
+    fun removeListener(){
+        onItemViewClickListener = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UpcomingHolder {
@@ -35,6 +39,7 @@ class UpcomingFragmentAdapter: RecyclerView.Adapter<UpcomingFragmentAdapter.Upco
 //            itemView.findViewById<AppCompatImageView>(R.id.movie_img)
             itemView.findViewById<TextView>(R.id.movie_title_upcoming).text = movie.title
             itemView.findViewById<TextView>(R.id.movie_expect_data_upcoming).text = movie.expectData.toString()
+            itemView.setOnClickListener{onItemViewClickListener?.onItemViewClick(movie)}
         }
     }
 }

@@ -8,13 +8,17 @@ import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.Movie
 
-class NowPlayingFragmentAdapter(var onItemViewClickListener: OnItemViewClickListener): RecyclerView.Adapter<NowPlayingFragmentAdapter.NowPlayingHolder>() {
+class NowPlayingFragmentAdapter(var onItemViewClickListener: OnItemViewClickListener?): RecyclerView.Adapter<NowPlayingFragmentAdapter.NowPlayingHolder>() {
 
     private lateinit var moviesData: List<Movie>
 
     fun setMovies(list: List<Movie>){
         moviesData = list
         notifyDataSetChanged()
+    }
+
+    fun removeListener(){
+        onItemViewClickListener = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingHolder {

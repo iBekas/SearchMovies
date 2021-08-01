@@ -19,15 +19,19 @@ class NowPlayingFragment : Fragment() {
 
     private val nowPlayingFragmentAdapter: NowPlayingFragmentAdapter = NowPlayingFragmentAdapter(object: OnItemViewClickListener{
         override fun onItemViewClick(movie: Movie) {
-            val manager = activity?.supportFragmentManager
-            if(manager != null){
-                val bundle = Bundle()
-                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                manager.beginTransaction()
-                    .add(R.id.now_playing_container, MovieDetailFragment.newInstance(bundle))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
+//            val manager = activity?.supportFragmentManager
+//            if(manager != null){
+//                val bundle = Bundle()
+//                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+//                manager.beginTransaction()
+//                    .add(R.id.now_playing_container, MovieDetailFragment.newInstance(bundle))
+//                    .addToBackStack("")
+//                    .commitAllowingStateLoss()
+//            }
+            val bundle = Bundle()
+            bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+            val movieDetailFragment = MovieDetailFragment.newInstance(bundle)
+            movieDetailFragment.show(requireActivity().supportFragmentManager, "Detail")
         }
     })
     private lateinit var navigation: Navigation
@@ -48,6 +52,7 @@ class NowPlayingFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        nowPlayingFragmentAdapter.removeListener()
     }
 
     companion object {

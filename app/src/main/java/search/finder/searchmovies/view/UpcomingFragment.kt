@@ -10,13 +10,32 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import search.finder.searchmovies.databinding.UpcomingFragmentBinding
+import search.finder.searchmovies.model.Movie
+import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingFragmentAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.UpcomingViewModel
 
 class UpcomingFragment : Fragment() {
 
-    private val upcomingFragmentAdapter: UpcomingFragmentAdapter = UpcomingFragmentAdapter()
+    private val upcomingFragmentAdapter: UpcomingFragmentAdapter = UpcomingFragmentAdapter(object:
+        OnItemViewClickListener {
+        override fun onItemViewClick(movie: Movie) {
+//            val manager = activity?.supportFragmentManager
+//            if(manager != null){
+//                val bundle = Bundle()
+//                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+//                manager.beginTransaction()
+//                    .add(R.id.now_playing_container, MovieDetailFragment.newInstance(bundle))
+//                    .addToBackStack("")
+//                    .commitAllowingStateLoss()
+//            }
+            val bundle = Bundle()
+            bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+            val movieDetailFragment = MovieDetailFragment.newInstance(bundle)
+            movieDetailFragment.show(requireActivity().supportFragmentManager, "Detail")
+        }
+    })
 
     private lateinit var navigation: Navigation
     private lateinit var viewModel: UpcomingViewModel
@@ -36,6 +55,7 @@ class UpcomingFragment : Fragment() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        upcomingFragmentAdapter.removeListener()
     }
 
     companion object {
