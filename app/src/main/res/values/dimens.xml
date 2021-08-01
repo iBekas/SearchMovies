@@ -7,4 +7,5 @@
     <dimen name="pic_movie_height">100dp</dimen>
     <dimen name="text_size_on_card">15sp</dimen>
     <dimen name="card_elevation">10dp</dimen>
+    <dimen name="head_rv_size">40sp</dimen>
 </resources>

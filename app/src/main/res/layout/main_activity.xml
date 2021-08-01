@@ -9,12 +9,26 @@
     tools:context=".view.MainActivity"
     tools:showIn="@layout/content_main">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/titel_head_rv_now_playing"
+        android:textColor="@color/black"
+        android:textSize="@dimen/head_rv_size"/>
+
     <FrameLayout
         android:id="@+id/now_playing_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_weight="1"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_head_rv_upcoming"
+        android:textColor="@color/black"
+        android:textSize="@dimen/head_rv_size"/>
 
     <FrameLayout
         android:id="@+id/upcoming_movies_container"
