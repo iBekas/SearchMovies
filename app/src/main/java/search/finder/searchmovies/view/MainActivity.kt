@@ -19,9 +19,8 @@ class MainActivity : AppCompatActivity() {
         binding = ContentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(R.id.now_playing_container, NowPlayingFragment.newInstance()).commit()
+            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MainFragment.newInstance()).commit()
 //            navigation.addFragment(NowPlayingFragment.newInstance(), R.id.now_playing_container, true)
-            navigation.addFragment(UpcomingFragment.newInstance(), R.id.upcoming_movies_container, true)
         }
         initToolbar()
     }
