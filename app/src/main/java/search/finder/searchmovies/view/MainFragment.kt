@@ -86,15 +86,18 @@ class MainFragment : Fragment() {
         setupRecyclerView()
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
         viewModel.getMovieNow()
-        viewModel.clearLiveData()
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData2(it) })
         viewModel.getMovieUpcoming()
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> TODO()
-            is AppState.Success -> {
+            is AppState.SuccessOld -> {
+                binding.movieLoading.visibility = View.GONE
+                binding.rvMoviesUpcoming.adapter = upcomingAdapter
+                upcomingAdapter.setMovies(appState.dataMovies)
+            }
+            is AppState.SuccessNew -> {
                 binding.movieLoading.visibility = View.GONE
                 binding.rvMovies.adapter = nowPlayingAdapter
                 nowPlayingAdapter.setMovies(appState.dataMovies)
@@ -105,19 +108,6 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun renderData2(appState: AppState) {
-        when (appState) {
-            is AppState.Error -> TODO()
-            is AppState.Success -> {
-                binding.movieLoading.visibility = View.GONE
-                binding.rvMoviesUpcoming.adapter = upcomingAdapter
-                upcomingAdapter.setMovies(appState.dataMovies)
-            }
-            is AppState.Loading -> {
-                binding.movieLoading.visibility = View.VISIBLE
-            }
-        }
-    }
 
     private fun setupRecyclerView() {
         val layoutManagerNowPlaying = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
