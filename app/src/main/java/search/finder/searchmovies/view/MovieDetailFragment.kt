@@ -31,7 +31,11 @@ class MovieDetailFragment : Fragment() {
         _binding = null
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         _binding = FragmentMovieDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -39,13 +43,17 @@ class MovieDetailFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         val movie = arguments?.getParcelable(KEY_MOVIE) as? Movie
-        if (movie != null) setData(movie)
+        movie?.let { setData(movie) }
     }
 
-    private fun setData(movie: Movie){
-        binding.movieTitleDetail.text = movie.title
-        binding.movieDescDetail.text = movie.movieDescription
-        binding.movieReleaseYearDetail.text = if (movie.releaseYear != null) movie.releaseYear.toString() else movie.expectData.toString()
-        binding.movieVotesAverageDetail.text = if(movie.vote != null) movie.vote.toString() else "0.0"
+    private fun setData(movie: Movie) {
+        with(binding) {
+            with(movie) {
+                movieTitleDetail.text = title
+                movieDescDetail.text = movieDescription
+                movieReleaseYearDetail.text = releaseYear?.toString() ?: expectData.toString()
+                movieVotesAverageDetail.text = vote?.toString() ?: "0.0"
+            }
+        }
     }
 }

@@ -15,16 +15,20 @@ class MainViewModel(
     fun getMovieUpcoming() = getDataFromLocalSource(false)
 
     private fun getDataFromLocalSource(isNow: Boolean) {
-        liveDataObserver.postValue(AppState.Loading)
-        if (isNow)
-            Thread {
-                Thread.sleep(2100)
-                liveDataObserver.postValue(AppState.SuccessNew(repository.getMovieFromLocalNow()))
-            }.start()
-        else
-            Thread {
-                Thread.sleep(2000)
-                liveDataObserver.postValue(AppState.SuccessOld(repository.getMovieFromLocalUpcoming()))
-            }.start()
+        with(liveDataObserver) {
+            with(repository) {
+                postValue(AppState.Loading)
+                if (isNow)
+                    Thread {
+                        Thread.sleep(2100)
+                        postValue(AppState.SuccessNew(getMovieFromLocalNow()))
+                    }.start()
+                else
+                    Thread {
+                        Thread.sleep(2000)
+                        postValue(AppState.SuccessOld(getMovieFromLocalUpcoming()))
+                    }.start()
+            }
+        }
     }
 }

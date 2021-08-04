@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import search.finder.searchmovies.R
@@ -18,16 +19,18 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ContentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (savedInstanceState == null) {
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container, MainFragment.newInstance()).commit()
-//            navigation.addFragment(NowPlayingFragment.newInstance(), R.id.now_playing_container, true)
+        savedInstanceState.let {
+            supportFragmentManager.beginTransaction()
+                .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
+                .replace(R.id.fragment_container, MainFragment.newInstance()).commit()
+            /*navigation.addFragment(MainFragment.newInstance(), R.id.fragment_container, true)*/
         }
         initToolbar()
     }
 
     private fun initToolbar(): Toolbar {
         setSupportActionBar(binding.toolbar)
-//        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        /*supportActionBar!!.setDisplayHomeAsUpEnabled(true)*/
         return binding.toolbar
     }
 
@@ -39,18 +42,19 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.sort -> {
-                Toast.makeText(this, "Сортируем", Toast.LENGTH_SHORT).show()
+                makeText(this, "Сортируем", Toast.LENGTH_SHORT).show()
                 return true
             }
             R.id.settings -> {
-                Toast.makeText(this, "Нстраиваем", Toast.LENGTH_SHORT).show()
+                makeText(this, "Нстраиваем", Toast.LENGTH_SHORT).show()
                 return true
             }
             R.id.favorite -> {
-                Toast.makeText(this, "Держи избранное", Toast.LENGTH_SHORT).show()
+                makeText(this, "Держи избранное", Toast.LENGTH_SHORT).show()
                 return true
             }
         }
+
         return super.onOptionsItemSelected(item)
     }
 

@@ -8,39 +8,46 @@ import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.Movie
 
-class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?): RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
+class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
+    RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
 
     private lateinit var moviesData: List<Movie>
 
-    fun setMovies(list: List<Movie>){
+    fun setMovies(list: List<Movie>) {
         moviesData = list
         notifyDataSetChanged()
     }
 
-    fun removeListener(){
+    fun removeListener() {
         onItemViewClickListener = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NowPlayingHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_now_playing, parent,false)
+        val view =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_now_playing, parent, false)
         return NowPlayingHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) {
+    override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) =
         holder.init(moviesData[position])
-    }
 
-    override fun getItemCount(): Int {
-        return moviesData.size
-    }
 
-    inner class NowPlayingHolder(view: View): RecyclerView.ViewHolder(view){
-        fun init(movie: Movie){
-//            itemView.findViewById<AppCompatImageView>(R.id.movie_img)
-            itemView.findViewById<TextView>(R.id.movie_title).text = movie.title
-            itemView.findViewById<TextView>(R.id.movie_release_year).text = movie.releaseYear.toString()
-            itemView.findViewById<TextView>(R.id.movie_votes_average).text = movie.vote.toString()
-            itemView.setOnClickListener{onItemViewClickListener?.onItemViewClick(movie)}
+    override fun getItemCount() = moviesData.size
+
+
+    inner class NowPlayingHolder(view: View) : RecyclerView.ViewHolder(view) {
+        fun init(movie: Movie) {
+            with(itemView) {
+                with(movie) {
+                    /*itemView.findViewById<AppCompatImageView>(R.id.movie_img)*/
+                    findViewById<TextView>(R.id.movie_title).text = title
+                    findViewById<TextView>(R.id.movie_release_year).text =
+                        releaseYear.toString()
+                    findViewById<TextView>(R.id.movie_votes_average).text =
+                        vote.toString()
+                    setOnClickListener { onItemViewClickListener?.onItemViewClick(movie) }
+                }
+            }
         }
     }
 }

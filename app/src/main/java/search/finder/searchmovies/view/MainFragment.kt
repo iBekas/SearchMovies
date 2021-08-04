@@ -1,11 +1,13 @@
 package search.finder.searchmovies.view
 
 import android.content.Context
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
@@ -18,29 +20,28 @@ import search.finder.searchmovies.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
 
-    private val nowPlayingAdapter: NowPlayingAdapter = NowPlayingAdapter(object: OnItemViewClickListener{
-        override fun onItemViewClick(movie: Movie) {
-            val manager = activity?.supportFragmentManager
-            if(manager != null){
-                val bundle = Bundle()
-                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                manager.beginTransaction()
-                    .add(R.id.fragment_container, MovieDetailFragment.newInstance(bundle))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
+    private val nowPlayingAdapter: NowPlayingAdapter =
+        NowPlayingAdapter(object : OnItemViewClickListener {
+            override fun onItemViewClick(movie: Movie) {
+                activity?.supportFragmentManager?.apply {
+                    beginTransaction()
+                        .replace(R.id.fragment_container, MovieDetailFragment.newInstance(Bundle().apply {
+                                putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+                            }))
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
             }
-        }
-    })
+        })
 
-    private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(object:
+    private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(object :
         OnItemViewClickListener {
         override fun onItemViewClick(movie: Movie) {
-            val manager = activity?.supportFragmentManager
-            if(manager != null){
-                val bundle = Bundle()
-                bundle.putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                manager.beginTransaction()
-                    .add(R.id.fragment_container, MovieDetailFragment.newInstance(bundle))
+            activity?.supportFragmentManager?.apply{
+                beginTransaction()
+                    .replace(R.id.fragment_container, MovieDetailFragment.newInstance(Bundle().apply {
+                        putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+                    }))
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -49,7 +50,9 @@ class MainFragment : Fragment() {
 
 
     private lateinit var navigation: Navigation
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
 
     private var _binding: MainFragmentBinding? = null
     private val binding: MainFragmentBinding
@@ -74,7 +77,8 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         return binding.root
@@ -82,24 +86,29 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         setupRecyclerView()
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
-        viewModel.getMovieNow()
-        viewModel.getMovieUpcoming()
+        with(viewModel) {
+            getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+            getMovieNow()
+            getMovieUpcoming()
+        }
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> TODO()
             is AppState.SuccessOld -> {
-                binding.movieLoading.visibility = View.GONE
-                binding.rvMoviesUpcoming.adapter = upcomingAdapter
+                with(binding) {
+                    movieLoading.visibility = View.GONE
+                    rvMoviesUpcoming.adapter = upcomingAdapter
+                }
                 upcomingAdapter.setMovies(appState.dataMovies)
             }
             is AppState.SuccessNew -> {
-                binding.movieLoading.visibility = View.GONE
-                binding.rvMovies.adapter = nowPlayingAdapter
+                with(binding) {
+                    movieLoading.visibility = View.GONE
+                    rvMovies.adapter = nowPlayingAdapter
+                }
                 nowPlayingAdapter.setMovies(appState.dataMovies)
             }
             is AppState.Loading -> {
@@ -110,10 +119,14 @@ class MainFragment : Fragment() {
 
 
     private fun setupRecyclerView() {
-        val layoutManagerNowPlaying = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvMovies.layoutManager = layoutManagerNowPlaying
-        val layoutManagerUpcoming = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        binding.rvMoviesUpcoming.layoutManager = layoutManagerUpcoming
+        val layoutManagerNowPlaying =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        val layoutManagerUpcoming =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        with(binding) {
+            rvMovies.layoutManager = layoutManagerNowPlaying
+            rvMoviesUpcoming.layoutManager = layoutManagerUpcoming
+        }
     }
 
 }

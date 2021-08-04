@@ -9,11 +9,13 @@ class Navigation(private val fragmentManager: FragmentManager) {
 
     fun addFragment(fragment: Fragment, container: Int, useBackStack: Boolean) {
         val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
-        fragmentTransaction.replace(container, fragment)
-        if (useBackStack) {
-            fragmentTransaction.addToBackStack(null)
+        with(fragmentTransaction) {
+            setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
+            replace(container, fragment)
+            if (useBackStack) {
+                addToBackStack(null)
+            }
+            commit()
         }
-        fragmentTransaction.commit()
     }
 }
