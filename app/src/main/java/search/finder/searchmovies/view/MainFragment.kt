@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.Movie
@@ -25,9 +25,12 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(movie: Movie) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
-                        .replace(R.id.fragment_container, MovieDetailFragment.newInstance(Bundle().apply {
+                        .replace(
+                            R.id.fragment_container,
+                            MovieDetailFragment.newInstance(Bundle().apply {
                                 putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                            }))
+                            })
+                        )
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }
@@ -37,11 +40,14 @@ class MainFragment : Fragment() {
     private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(object :
         OnItemViewClickListener {
         override fun onItemViewClick(movie: Movie) {
-            activity?.supportFragmentManager?.apply{
+            activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .replace(R.id.fragment_container, MovieDetailFragment.newInstance(Bundle().apply {
-                        putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                    }))
+                    .replace(
+                        R.id.fragment_container,
+                        MovieDetailFragment.newInstance(Bundle().apply {
+                            putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+                        })
+                    )
                     .addToBackStack("")
                     .commitAllowingStateLoss()
             }
@@ -88,7 +94,7 @@ class MainFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
         with(viewModel) {
-            getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+            getLiveData().observe(viewLifecycleOwner, { renderData(it) })
             getMovieNow()
             getMovieUpcoming()
         }
@@ -101,15 +107,17 @@ class MainFragment : Fragment() {
                 with(binding) {
                     movieLoading.visibility = View.GONE
                     rvMoviesUpcoming.adapter = upcomingAdapter
+                    upcomingAdapter.setMovies(appState.dataMovies)
+                    root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
                 }
-                upcomingAdapter.setMovies(appState.dataMovies)
             }
             is AppState.SuccessNew -> {
                 with(binding) {
                     movieLoading.visibility = View.GONE
                     rvMovies.adapter = nowPlayingAdapter
+                    nowPlayingAdapter.setMovies(appState.dataMovies)
+                    /*root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)*/
                 }
-                nowPlayingAdapter.setMovies(appState.dataMovies)
             }
             is AppState.Loading -> {
                 binding.movieLoading.visibility = View.VISIBLE
@@ -128,5 +136,14 @@ class MainFragment : Fragment() {
             rvMoviesUpcoming.layoutManager = layoutManagerUpcoming
         }
     }
+
+    private fun View.snackBarShow(resourceID: Int, duration: Int) {
+        Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
+    }
+
+    /* Попытка не пытка, без переменной не расширяется ¯\_(ツ)_/¯
+    fun Snackbar.snackBar(snackbar: Snackbar, view: View, resourceID: Int, duration: Int) {
+        Snackbar.make(view, requireActivity().resources.getString(resourceID), duration).show()
+    }*/
 
 }

@@ -8,4 +8,7 @@
     <string name="title_head_rv_now_playing">Now Playing</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="success">Фильмы загружены</string>
+    <string name="success_now">Выпущенные фильмы загружены</string>
+    <string name="success_upcoming">Будущие фильмы загружены</string>
 </resources>
