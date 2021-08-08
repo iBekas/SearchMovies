@@ -12,17 +12,19 @@ import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.Movie
+import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.MainViewModel
+import search.finder.searchmovies.viewmodel.MovieLoaderListener
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), MovieLoaderListener {
 
     private val nowPlayingAdapter: NowPlayingAdapter =
         NowPlayingAdapter(object : OnItemViewClickListener {
-            override fun onItemViewClick(movie: Movie) {
+            override fun onItemViewClick(movie: MovieDTO) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
                         .replace(
@@ -39,7 +41,7 @@ class MainFragment : Fragment() {
 
     private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(object :
         OnItemViewClickListener {
-        override fun onItemViewClick(movie: Movie) {
+        override fun onItemViewClick(movie: MovieDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
                     .replace(
@@ -139,6 +141,14 @@ class MainFragment : Fragment() {
 
     private fun View.snackBarShow(resourceID: Int, duration: Int) {
         Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
+    }
+
+    override fun onLoaded(movieDTO: MovieDTO) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onFailed(throwable: Throwable) {
+        TODO("Not yet implemented")
     }
 
     /* Попытка не пытка, без переменной не расширяется ¯\_(ツ)_/¯

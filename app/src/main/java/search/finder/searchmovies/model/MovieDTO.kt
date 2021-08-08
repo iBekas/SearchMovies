@@ -1,6 +1,10 @@
 package search.finder.searchmovies.model
 
-data class MovieDTO (
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+data class MovieDTO(
     val adult: Boolean,
     val backdropPath: String,
     val genreIDS: List<Long>,
@@ -15,4 +19,4 @@ data class MovieDTO (
     val video: Boolean,
     val voteAverage: Double,
     val voteCount: Long
-)
+): Parcelable

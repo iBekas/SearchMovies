@@ -1,7 +1,7 @@
 package search.finder.searchmovies.view.adapter
 
-import search.finder.searchmovies.model.Movie
+import search.finder.searchmovies.model.MovieDTO
 
 interface OnItemViewClickListener {
-    fun onItemViewClick(movie: Movie)
+    fun onItemViewClick(movie: MovieDTO)
 }

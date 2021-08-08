@@ -4,12 +4,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import search.finder.searchmovies.model.Repository
 import search.finder.searchmovies.model.RepositoryImpl
-import java.util.*
-import java.util.concurrent.CyclicBarrier
-import java.util.concurrent.Semaphore
-import java.util.concurrent.TimeUnit
-import java.util.concurrent.locks.Lock
-import java.util.concurrent.locks.ReentrantLock
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
