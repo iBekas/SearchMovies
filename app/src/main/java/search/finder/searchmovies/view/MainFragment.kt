@@ -88,13 +88,13 @@ class MainFragment : Fragment(){
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
+        MovieLoader().loadNowPlaying()
+        MovieLoader().loadUpcoming()
         return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        MovieLoader().loadNowPlaying()
-        MovieLoader().loadUpcoming()
         setupRecyclerView()
         with(viewModel) {
             getLiveData().observe(viewLifecycleOwner, { renderData(it) })

@@ -6,15 +6,18 @@ import search.finder.searchmovies.model.*
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
+import java.util.concurrent.locks.ReentrantLock
 import javax.net.ssl.HttpsURLConnection
 
 class MovieLoader(){
     private val language = "ru-RU"
+    private val lock = ReentrantLock()
 
     fun loadNowPlaying(){
         val handler = Handler()
         Thread {
             try {
+                lock.lock()
                 val url =
                     URL("${TMDB_API_URL_NOW_PLAYING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
                 val httpsURLConnection: HttpsURLConnection =
@@ -26,7 +29,8 @@ class MovieLoader(){
                 val nowPlayingDTO: NowPlayingDTO = Gson().fromJson(buffer, NowPlayingDTO::class.java)
                 handler.post(Runnable { setMovieNowToList(nowPlayingDTO.results) })
             } catch (e: Exception){
-                TODO("e")
+            } finally {
+                lock.unlock()
             }
         }.start()
     }
@@ -35,6 +39,7 @@ class MovieLoader(){
         val handler = Handler()
         Thread {
             try {
+                lock.lock()
                 val url =
                     URL("${TMDB_API_URL_UPCOMING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
                 val httpsURLConnection: HttpsURLConnection =
@@ -46,7 +51,8 @@ class MovieLoader(){
                 val upcomingDTO: UpcomingDTO = Gson().fromJson(buffer, UpcomingDTO::class.java)
                 handler.post(Runnable { setMovieUpcomingToList(upcomingDTO.results) })
             } catch (e: Exception){
-                TODO("e")
+            } finally {
+                lock.unlock()
             }
         }.start()
     }
