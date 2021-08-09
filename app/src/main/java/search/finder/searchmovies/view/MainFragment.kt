@@ -11,16 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
-import search.finder.searchmovies.model.Movie
 import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.MainViewModel
-import search.finder.searchmovies.viewmodel.MovieLoaderListener
+import search.finder.searchmovies.viewmodel.MovieLoader
 
-class MainFragment : Fragment(), MovieLoaderListener {
+class MainFragment : Fragment(){
 
     private val nowPlayingAdapter: NowPlayingAdapter =
         NowPlayingAdapter(object : OnItemViewClickListener {
@@ -94,6 +93,8 @@ class MainFragment : Fragment(), MovieLoaderListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        MovieLoader().loadNowPlaying()
+        MovieLoader().loadUpcoming()
         setupRecyclerView()
         with(viewModel) {
             getLiveData().observe(viewLifecycleOwner, { renderData(it) })
@@ -141,14 +142,6 @@ class MainFragment : Fragment(), MovieLoaderListener {
 
     private fun View.snackBarShow(resourceID: Int, duration: Int) {
         Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
-    }
-
-    override fun onLoaded(movieDTO: MovieDTO) {
-        TODO("Not yet implemented")
-    }
-
-    override fun onFailed(throwable: Throwable) {
-        TODO("Not yet implemented")
     }
 
     /* Попытка не пытка, без переменной не расширяется ¯\_(ツ)_/¯

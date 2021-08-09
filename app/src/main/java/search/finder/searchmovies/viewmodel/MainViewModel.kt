@@ -22,12 +22,12 @@ class MainViewModel(
             if (isNow)
                 Thread {
                     Thread.sleep(2100)
-                    postValue(AppState.SuccessNew(getMovieFromLocalNow()))
+                    postValue(AppState.SuccessNew(getMovieFromServerNow()))
                 }.start()
             else
                 Thread {
                     Thread.sleep(2000)
-                    postValue(AppState.SuccessOld(getMovieFromLocalUpcoming()))
+                    postValue(AppState.SuccessOld(getMovieFromServerUpcoming()))
                 }.start()
         }
     }

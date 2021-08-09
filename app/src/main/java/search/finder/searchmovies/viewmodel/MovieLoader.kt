@@ -8,42 +8,45 @@ import java.io.InputStreamReader
 import java.net.URL
 import javax.net.ssl.HttpsURLConnection
 
-class MovieLoader(private val listener: MovieLoaderListener){
-    private val handler = Handler()
+class MovieLoader(){
     private val language = "ru-RU"
 
     fun loadNowPlaying(){
+        val handler = Handler()
         Thread {
             try {
-                val url = URL("${TMDB_API_URL_NOW_PLAYING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
+                val url =
+                    URL("${TMDB_API_URL_NOW_PLAYING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
                 val httpsURLConnection: HttpsURLConnection =
                     url.openConnection() as HttpsURLConnection
                 httpsURLConnection.connectTimeout = 5000
                 httpsURLConnection.requestMethod = "GET"
                 httpsURLConnection.addRequestProperty(TMDB_API_KEY_NAME, TMDB_API_KEY_VALUE)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
-                val movieDTO: List<MovieDTO> = Gson().fromJson(buffer, MovieDTO::class.java)
-                handler.post(Runnable { listener.onLoaded(movieDTO) })
-            } catch (e: Exception) {
-                handler.post(Runnable { listener.onFailed(e) })
+                val nowPlayingDTO: NowPlayingDTO = Gson().fromJson(buffer, NowPlayingDTO::class.java)
+                handler.post(Runnable { setMovieNowToList(nowPlayingDTO.results) })
+            } catch (e: Exception){
+                TODO("e")
             }
         }.start()
     }
 
     fun loadUpcoming(){
+        val handler = Handler()
         Thread {
             try {
-                val url = URL("${TMDB_API_URL_UPCOMING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
+                val url =
+                    URL("${TMDB_API_URL_UPCOMING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
                 val httpsURLConnection: HttpsURLConnection =
                     url.openConnection() as HttpsURLConnection
                 httpsURLConnection.connectTimeout = 5000
                 httpsURLConnection.requestMethod = "GET"
                 httpsURLConnection.addRequestProperty(TMDB_API_KEY_NAME, TMDB_API_KEY_VALUE)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
-                val movieDTO: MovieDTO = Gson().fromJson(buffer, MovieDTO::class.java)
-                handler.post(Runnable { listener.onLoaded(movieDTO) })
-            } catch (e: Exception) {
-                handler.post(Runnable { listener.onFailed(e) })
+                val upcomingDTO: UpcomingDTO = Gson().fromJson(buffer, UpcomingDTO::class.java)
+                handler.post(Runnable { setMovieUpcomingToList(upcomingDTO.results) })
+            } catch (e: Exception){
+                TODO("e")
             }
         }.start()
     }
