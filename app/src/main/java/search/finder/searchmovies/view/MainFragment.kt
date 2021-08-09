@@ -2,7 +2,6 @@ package search.finder.searchmovies.view
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,6 +13,7 @@ import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.NowPlayingDTO
+import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
@@ -98,29 +98,31 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
-        /*with(viewModel) {
-            getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-            getMovieNow()
-            getMovieUpcoming()
-        }*/
         val movieLoaderListener: MovieLoaderListener =
             object : MovieLoaderListener {
-                override fun onLoaded(weatherDTO: NowPlayingDTO) {
-                    Log.d("mylogs","")
+                override fun onLoadedNow(nowPlayingDTO: NowPlayingDTO) {
                     with(binding){
                         movieLoading.visibility = View.GONE
                         rvMovies.adapter = nowPlayingAdapter
-                        nowPlayingAdapter.setMovies(weatherDTO)
+                        nowPlayingAdapter.setMovies(nowPlayingDTO)
                     }
+                }
 
+                override fun onLoadedUpcoming(upcomingDTO: UpcomingDTO) {
+                    with(binding) {
+                        movieLoading.visibility = View.GONE
+                        rvMoviesUpcoming.adapter = upcomingAdapter
+                        upcomingAdapter.setMovies(upcomingDTO)
+                        root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
+                    }
                 }
 
                 override fun onFailed(throwable: Throwable) {
                     TODO("Not yet implemented")
                 }
-
             }
         MovieLoader(movieLoaderListener).loadNowPlaying()
+        MovieLoader(movieLoaderListener).loadUpcoming()
     }
 
     private fun renderData(appState: AppState) {
@@ -130,7 +132,7 @@ class MainFragment : Fragment() {
                 with(binding) {
                     movieLoading.visibility = View.GONE
                     rvMoviesUpcoming.adapter = upcomingAdapter
-                    upcomingAdapter.setMovies(appState.dataMovies)
+//                    upcomingAdapter.setMovies(appState.dataMovies)
                     root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
                 }
             }
@@ -162,7 +164,8 @@ class MainFragment : Fragment() {
     }
 
     interface MovieLoaderListener {
-        fun onLoaded(weatherDTO: NowPlayingDTO)
+        fun onLoadedNow(nowPlayingDTO: NowPlayingDTO)
+        fun onLoadedUpcoming(upcomingDTO: UpcomingDTO)
         fun onFailed(throwable: Throwable)
     }
 

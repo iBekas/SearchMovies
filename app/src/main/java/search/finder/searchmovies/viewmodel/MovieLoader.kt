@@ -17,7 +17,6 @@ class MovieLoader(  private val listener: MainFragment.MovieLoaderListener){
     fun loadNowPlaying(){
         val handler = Handler()
         Thread {
-           // try {
                 lock.lock()
                 val url =
                     URL("${TMDB_API_URL_NOW_PLAYING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
@@ -28,22 +27,13 @@ class MovieLoader(  private val listener: MainFragment.MovieLoaderListener){
                 httpsURLConnection.addRequestProperty(TMDB_API_KEY_NAME, TMDB_API_KEY_VALUE)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                 val nowPlayingDTO: NowPlayingDTO = Gson().fromJson(buffer, NowPlayingDTO::class.java)
-                handler.post(Runnable {
-                    listener.onLoaded(nowPlayingDTO)
-                    //setMovieNowToList(nowPlayingDTO.results)
-                })
-            /*/} catch (e: Exception){
-            } finally {
-                lock.unlock()
-            }*/
+                handler.post(Runnable { listener.onLoadedNow(nowPlayingDTO) })
         }.start()
     }
 
     fun loadUpcoming(){
         val handler = Handler()
         Thread {
-            try {
-                lock.lock()
                 val url =
                     URL("${TMDB_API_URL_UPCOMING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
                 val httpsURLConnection: HttpsURLConnection =
@@ -53,11 +43,7 @@ class MovieLoader(  private val listener: MainFragment.MovieLoaderListener){
                 httpsURLConnection.addRequestProperty(TMDB_API_KEY_NAME, TMDB_API_KEY_VALUE)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                 val upcomingDTO: UpcomingDTO = Gson().fromJson(buffer, UpcomingDTO::class.java)
-                handler.post(Runnable { setMovieUpcomingToList(upcomingDTO.results) })
-            } catch (e: Exception){
-            } finally {
-                lock.unlock()
-            }
+                handler.post(Runnable { listener.onLoadedUpcoming(upcomingDTO) })
         }.start()
     }
 }

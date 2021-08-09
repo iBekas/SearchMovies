@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
-import search.finder.searchmovies.model.Movie
 import search.finder.searchmovies.model.MovieDTO
 
 
@@ -52,9 +51,9 @@ class MovieDetailFragment : Fragment() {
         with(binding) {
             with(movie) {
                 movieTitleDetail.text = title
-                movieDescDetail.text = originalTitle
-                movieReleaseYearDetail.text = releaseDate?.toString() ?: ""
-                movieVotesAverageDetail.text = voteCount?.toString() ?: "0.0"
+                movieDescDetail.text = overview
+                movieReleaseYearDetail.text = releaseDate
+                movieVotesAverageDetail.text = voteCount.toString()
             }
         }
     }
