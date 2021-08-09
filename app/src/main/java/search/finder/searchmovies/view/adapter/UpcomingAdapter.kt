@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.Movie
+import search.finder.searchmovies.model.MovieDTO
 
 class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<UpcomingAdapter.UpcomingHolder>() {
 
-    private lateinit var moviesData: List<Movie>
+    private lateinit var moviesData: List<MovieDTO>
 
-    fun setMovies(list: List<Movie>) {
+    fun setMovies(list: List<MovieDTO>) {
         moviesData = list
         notifyDataSetChanged()
     }
@@ -34,13 +35,13 @@ class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     override fun getItemCount() = moviesData.size
 
     inner class UpcomingHolder(view: View) : RecyclerView.ViewHolder(view) {
-        fun init(movie: Movie) {
+        fun init(movie: MovieDTO) {
             with(itemView) {
                 with(movie) {
                     /*itemView.findViewById<AppCompatImageView>(R.id.movie_img)*/
                     findViewById<TextView>(R.id.movie_title_upcoming).text = title
                     findViewById<TextView>(R.id.movie_expect_data_upcoming).text =
-                        expectData.toString()
+                        releaseDate
                     setOnClickListener { onItemViewClickListener?.onItemViewClick(movie) }
                 }
             }

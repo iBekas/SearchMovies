@@ -1,5 +1,8 @@
 package search.finder.searchmovies.model
 
+data class NowPlayingDTO(val results:List<MovieDTO>)
+data class UpcomingDTO(val results:List<MovieDTO>)
+
 data class MovieDTO (
     val adult: Boolean,
     val backdropPath: String,
