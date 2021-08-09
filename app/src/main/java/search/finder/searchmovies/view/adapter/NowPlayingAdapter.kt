@@ -7,13 +7,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.NowPlayingDTO
 
 class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
 
-    private lateinit var moviesData: List<MovieDTO>
+    private lateinit var moviesData: NowPlayingDTO
 
-    fun setMovies(list: List<MovieDTO>) {
+    fun setMovies(list: NowPlayingDTO) {
         moviesData = list
         notifyDataSetChanged()
     }
@@ -29,10 +30,10 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     }
 
     override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) =
-        holder.init(moviesData[position])
+        holder.init(moviesData.results[position])
 
 
-    override fun getItemCount() = moviesData.size
+    override fun getItemCount() = moviesData.results.size
 
 
     inner class NowPlayingHolder(view: View) : RecyclerView.ViewHolder(view) {

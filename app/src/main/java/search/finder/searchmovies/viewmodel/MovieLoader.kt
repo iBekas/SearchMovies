@@ -3,20 +3,21 @@ package search.finder.searchmovies.viewmodel
 import android.os.Handler
 import com.google.gson.Gson
 import search.finder.searchmovies.model.*
+import search.finder.searchmovies.view.MainFragment
 import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.net.URL
 import java.util.concurrent.locks.ReentrantLock
 import javax.net.ssl.HttpsURLConnection
 
-class MovieLoader(){
+class MovieLoader(  private val listener: MainFragment.MovieLoaderListener){
     private val language = "ru-RU"
     private val lock = ReentrantLock()
 
     fun loadNowPlaying(){
         val handler = Handler()
         Thread {
-            try {
+           // try {
                 lock.lock()
                 val url =
                     URL("${TMDB_API_URL_NOW_PLAYING}?api_key=${TMDB_API_KEY_VALUE}&language=${language}")
@@ -27,11 +28,14 @@ class MovieLoader(){
                 httpsURLConnection.addRequestProperty(TMDB_API_KEY_NAME, TMDB_API_KEY_VALUE)
                 val buffer = BufferedReader(InputStreamReader(httpsURLConnection.inputStream))
                 val nowPlayingDTO: NowPlayingDTO = Gson().fromJson(buffer, NowPlayingDTO::class.java)
-                handler.post(Runnable { setMovieNowToList(nowPlayingDTO.results) })
-            } catch (e: Exception){
+                handler.post(Runnable {
+                    listener.onLoaded(nowPlayingDTO)
+                    //setMovieNowToList(nowPlayingDTO.results)
+                })
+            /*/} catch (e: Exception){
             } finally {
                 lock.unlock()
-            }
+            }*/
         }.start()
     }
 

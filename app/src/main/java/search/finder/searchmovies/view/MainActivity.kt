@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
             /*navigation.addFragment(MainFragment.newInstance(), R.id.fragment_container, true)*/
         }
         initToolbar()
-        
     }
 
     private fun initToolbar(): Toolbar {

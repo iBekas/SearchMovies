@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.Movie
+import search.finder.searchmovies.model.MovieDTO
 
 
 class MovieDetailFragment : Fragment() {
@@ -42,17 +43,18 @@ class MovieDetailFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val movie = arguments?.getParcelable(KEY_MOVIE) as? Movie
+        //val movie = arguments?.getParcelable(KEY_MOVIE) as? Movie
+        val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
         movie?.let { setData(movie) }
     }
 
-    private fun setData(movie: Movie) {
+    private fun setData(movie: MovieDTO) {
         with(binding) {
             with(movie) {
                 movieTitleDetail.text = title
-                movieDescDetail.text = movieDescription
-                movieReleaseYearDetail.text = releaseYear?.toString() ?: expectData.toString()
-                movieVotesAverageDetail.text = vote?.toString() ?: "0.0"
+                movieDescDetail.text = originalTitle
+                movieReleaseYearDetail.text = releaseDate?.toString() ?: ""
+                movieVotesAverageDetail.text = voteCount?.toString() ?: "0.0"
             }
         }
     }
