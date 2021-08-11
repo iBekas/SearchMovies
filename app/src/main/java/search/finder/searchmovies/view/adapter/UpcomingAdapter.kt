@@ -7,14 +7,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.MovieDTO
-import search.finder.searchmovies.model.UpcomingDTO
 
 class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<UpcomingAdapter.UpcomingHolder>() {
 
-    private lateinit var moviesData: UpcomingDTO
+    private lateinit var moviesData: ArrayList<MovieDTO>
 
-    fun setMovies(list: UpcomingDTO) {
+    fun setMovies(list: ArrayList<MovieDTO>) {
         moviesData = list
         notifyDataSetChanged()
     }
@@ -30,9 +29,9 @@ class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     }
 
     override fun onBindViewHolder(holder: UpcomingHolder, position: Int) =
-        holder.init(moviesData.results[position])
+        holder.init(moviesData[position])
 
-    override fun getItemCount() = moviesData.results.size
+    override fun getItemCount() = moviesData.size
 
     inner class UpcomingHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(movie: MovieDTO) {

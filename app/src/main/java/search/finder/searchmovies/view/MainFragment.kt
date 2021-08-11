@@ -1,12 +1,16 @@
 package search.finder.searchmovies.view
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
@@ -76,7 +80,7 @@ class MainFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        _binding = null
+        //_binding = null
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
     }
@@ -85,41 +89,18 @@ class MainFragment : Fragment() {
         fun newInstance() = MainFragment()
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        context?.let{ LocalBroadcastManager.getInstance(it).registerReceiver(loadResultsReceiver, IntentFilter(MAIN_INTENT_FILTER))}
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
         setupRecyclerView()
-        val movieLoaderListener: MovieLoaderListener =
-            object : MovieLoaderListener {
-                override fun onLoadedNow(nowPlayingDTO: NowPlayingDTO) {
-                    with(binding) {
-                        movieLoading.visibility = View.GONE
-                        rvMovies.adapter = nowPlayingAdapter
-                        nowPlayingAdapter.setMovies(nowPlayingDTO)
-                    }
-                }
-
-                override fun onLoadedUpcoming(upcomingDTO: UpcomingDTO) {
-                    with(binding) {
-                        movieLoading.visibility = View.GONE
-                        rvMoviesUpcoming.adapter = upcomingAdapter
-                        upcomingAdapter.setMovies(upcomingDTO)
-                        root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
-                    }
-                }
-
-                override fun onFailed(throwable: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            }
-        MovieLoader(movieLoaderListener).loadNowPlaying()
-        MovieLoader(movieLoaderListener).loadUpcoming()
+        setMovieLanguage()
+        return binding.root
     }
 
     private fun setupRecyclerView() {
@@ -131,46 +112,52 @@ class MainFragment : Fragment() {
             rvMovies.layoutManager = layoutManagerNowPlaying
             rvMoviesUpcoming.layoutManager = layoutManagerUpcoming
         }
-
     }
 
-    interface MovieLoaderListener {
-        fun onLoadedNow(nowPlayingDTO: NowPlayingDTO)
-        fun onLoadedUpcoming(upcomingDTO: UpcomingDTO)
-        fun onFailed(throwable: Throwable)
+    private fun setMovieLanguage(){
+        with(binding){
+            mainView.visibility = View.GONE
+            movieLoading.visibility = View.VISIBLE
+        }
+        context?.startService(Intent(context, MainService::class.java).apply {
+            putExtra(LANGUAGE_EXTRA, "ru-RU")
+        })
+    }
+
+    private val loadResultsReceiver: BroadcastReceiver = object : BroadcastReceiver(){
+        override fun onReceive(context: Context?, intent: Intent?) {
+            intent?.let{
+                when(it.getStringExtra(MAIN_LOAD_RESULT_EXTRA)){
+                    MAIN_RESPONSE_SUCCESS_NOW_EXTRA->
+                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_NOW_LIST_EXTRA)?.let { it1 ->
+                            renderData(true, it1)
+                        }
+                    MAIN_RESPONSE_SUCCESS_UPCOMING_EXTRA->
+                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_NOW_LIST_EXTRA)?.let { it1 ->
+                            renderData(false, it1)
+                        }
+                    else -> null
+                }
+            }
+        }
+    }
+
+    private fun renderData(isNow: Boolean, movies: ArrayList<MovieDTO>){
+        with(binding) {
+            mainView.visibility = View.VISIBLE
+            movieLoading.visibility = View.GONE
+            if (isNow) {
+                    rvMovies.adapter = nowPlayingAdapter
+                    nowPlayingAdapter.setMovies(movies)
+            } else {
+                    rvMoviesUpcoming.adapter = upcomingAdapter
+                    upcomingAdapter.setMovies(movies)
+            }
+            root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
+        }
     }
 
     private fun View.snackBarShow(resourceID: Int, duration: Int) {
         Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
     }
-
-    /* Попытка не пытка, без переменной не расширяется ¯\_(ツ)_/¯
-    fun Snackbar.snackBar(snackbar: Snackbar, view: View, resourceID: Int, duration: Int) {
-        Snackbar.make(view, requireActivity().resources.getString(resourceID), duration).show()
-    }*/
-
-    /*   private fun renderData(appState: AppState) {
-       when (appState) {
-           is AppState.Error -> TODO()
-           is AppState.SuccessOld -> {
-               with(binding) {
-                   movieLoading.visibility = View.GONE
-                   rvMoviesUpcoming.adapter = upcomingAdapter
-                   upcomingAdapter.setMovies(appState.dataMovies)
-                   root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
-               }
-           }
-           is AppState.SuccessNew -> {
-               with(binding) {
-                   movieLoading.visibility = View.GONE
-                   rvMovies.adapter = nowPlayingAdapter
-                   nowPlayingAdapter.setMovies(appState.dataMovies)
-                   /*root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)*/
-               }
-           }
-           is AppState.Loading -> {
-               binding.movieLoading.visibility = View.VISIBLE
-           }
-       }
-   }*/
 }

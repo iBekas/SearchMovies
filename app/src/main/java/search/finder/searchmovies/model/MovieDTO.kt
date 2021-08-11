@@ -3,8 +3,11 @@ package search.finder.searchmovies.model
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
-data class NowPlayingDTO(val results:List<MovieDTO>)
-data class UpcomingDTO(val results:List<MovieDTO>)
+@Parcelize
+data class NowPlayingDTO(val results:ArrayList<MovieDTO>): Parcelable
+
+@Parcelize
+data class UpcomingDTO(val results:ArrayList<MovieDTO>): Parcelable
 
 @Parcelize
 data class MovieDTO (
