@@ -28,7 +28,7 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(movie: MovieDTO) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
-                        .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
+                        .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
                         .replace(
                             R.id.fragment_container,
                             MovieDetailFragment.newInstance(Bundle().apply {
@@ -46,7 +46,7 @@ class MainFragment : Fragment() {
         override fun onItemViewClick(movie: MovieDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
+                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
                     .replace(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
