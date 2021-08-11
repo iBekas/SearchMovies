@@ -28,11 +28,12 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
         return NowPlayingHolder(view)
     }
 
-    override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) =
-        holder.init(moviesData[position])
+    override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) {
+        val positionInList: Int = position % moviesData.size
+        holder.init(moviesData[positionInList])
+    }
 
-
-    override fun getItemCount() = moviesData.size
+    override fun getItemCount() =  Integer.MAX_VALUE
 
 
     inner class NowPlayingHolder(view: View) : RecyclerView.ViewHolder(view) {

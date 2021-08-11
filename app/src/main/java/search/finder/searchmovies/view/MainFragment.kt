@@ -97,10 +97,12 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        val layoutManagerNowPlaying =
+        var layoutManagerNowPlaying =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        layoutManagerNowPlaying.scrollToPosition(Integer.MAX_VALUE / 2)
         val layoutManagerUpcoming =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        layoutManagerUpcoming.scrollToPosition(Integer.MAX_VALUE / 2)
         with(binding) {
             rvMovies.layoutManager = layoutManagerNowPlaying
             rvMoviesUpcoming.layoutManager = layoutManagerUpcoming

@@ -28,10 +28,12 @@ class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
         return UpcomingHolder(view)
     }
 
-    override fun onBindViewHolder(holder: UpcomingHolder, position: Int) =
-        holder.init(moviesData[position])
+    override fun onBindViewHolder(holder: UpcomingHolder, position: Int) {
+        val positionInList: Int = position % moviesData.size
+        holder.init(moviesData[positionInList])
+    }
 
-    override fun getItemCount() = moviesData.size
+    override fun getItemCount() = Integer.MAX_VALUE
 
     inner class UpcomingHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(movie: MovieDTO) {
