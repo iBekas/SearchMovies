@@ -52,8 +52,8 @@ class MovieDetailFragment : Fragment() {
             with(movie) {
                 movieTitleDetail.text = title
                 movieDescDetail.text = overview
-                movieReleaseYearDetail.text = releaseDate
-                movieVotesAverageDetail.text = voteCount.toString()
+                movieReleaseYearDetail.text = release_date
+                movieVotesAverageDetail.text = vote_average.toString()
             }
         }
     }

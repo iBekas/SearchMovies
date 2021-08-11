@@ -5,10 +5,11 @@
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_marginEnd="@dimen/card_margin"
+    android:layout_margin="@dimen/card_margin_all"
+    android:background="@color/light_grey"
     android:elevation="20dp"
     app:cardCornerRadius="@dimen/card_radius"
     app:cardElevation="@dimen/card_elevation"
-    app:strokeColor="@color/black"
     app:strokeWidth="@dimen/cardview_compat_inset_shadow"
     app:contentPadding="5dp">
 
@@ -31,7 +32,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:maxLines="2"
+            android:maxLines="4"
+            android:ems="5"
             android:textSize="@dimen/text_size_on_card"
             android:textStyle="bold"
             tools:text="Лучший фильм" />
@@ -41,7 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
+            android:gravity="center|bottom"
             android:textSize="@dimen/text_size_on_card"
             android:textStyle="bold"
             tools:text="01.01.2020" />

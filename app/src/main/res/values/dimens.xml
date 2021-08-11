@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="card_margin">5dp</dimen>
+    <dimen name="card_margin">10dp</dimen>
     <dimen name="card_radius">15dp</dimen>
     <dimen name="margin_before_border">8dp</dimen>
     <dimen name="pic_movie_width">100dp</dimen>
@@ -15,4 +15,5 @@
     <dimen name="text_size_on_detail_info">18sp</dimen>
     <dimen name="margin_on_detail_info">16dp</dimen>
     <dimen name="margin_fab">2dp</dimen>
+    <dimen name="card_margin_all">5dp</dimen>
 </resources>

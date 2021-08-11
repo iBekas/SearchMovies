@@ -40,12 +40,12 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
         fun init(movie: MovieDTO) {
             with(itemView) {
                 with(movie) {
-                    /*itemView.findViewById<AppCompatImageView>(R.id.movie_img)*/
+                    /*findViewById<AppCompatImageView>(R.id.movie_img) = posterPath*/
                     findViewById<TextView>(R.id.movie_title).text = title
                     findViewById<TextView>(R.id.movie_release_year).text =
-                        releaseDate
+                        release_date.substring(0, 4)
                     findViewById<TextView>(R.id.movie_votes_average).text =
-                        voteAverage.toString()
+                        vote_average.toString()
                     setOnClickListener { onItemViewClickListener?.onItemViewClick(movie) }
                 }
             }

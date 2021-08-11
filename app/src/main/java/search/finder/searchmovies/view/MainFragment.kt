@@ -17,7 +17,6 @@ import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
-import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.MainViewModel
 import search.finder.searchmovies.viewmodel.MovieLoader
 
@@ -90,8 +89,6 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
-        //MovieLoader().loadNowPlaying()
-        //MovieLoader().loadUpcoming()
         return binding.root
     }
 
@@ -101,7 +98,7 @@ class MainFragment : Fragment() {
         val movieLoaderListener: MovieLoaderListener =
             object : MovieLoaderListener {
                 override fun onLoadedNow(nowPlayingDTO: NowPlayingDTO) {
-                    with(binding){
+                    with(binding) {
                         movieLoading.visibility = View.GONE
                         rvMovies.adapter = nowPlayingAdapter
                         nowPlayingAdapter.setMovies(nowPlayingDTO)
@@ -124,32 +121,6 @@ class MainFragment : Fragment() {
         MovieLoader(movieLoaderListener).loadNowPlaying()
         MovieLoader(movieLoaderListener).loadUpcoming()
     }
-
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Error -> TODO()
-            is AppState.SuccessOld -> {
-                with(binding) {
-                    movieLoading.visibility = View.GONE
-                    rvMoviesUpcoming.adapter = upcomingAdapter
-//                    upcomingAdapter.setMovies(appState.dataMovies)
-                    root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
-                }
-            }
-            is AppState.SuccessNew -> {
-                with(binding) {
-                    movieLoading.visibility = View.GONE
-                    rvMovies.adapter = nowPlayingAdapter
-                    //nowPlayingAdapter.setMovies(appState.dataMovies)
-                    /*root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)*/
-                }
-            }
-            is AppState.Loading -> {
-                binding.movieLoading.visibility = View.VISIBLE
-            }
-        }
-    }
-
 
     private fun setupRecyclerView() {
         val layoutManagerNowPlaying =
@@ -178,4 +149,28 @@ class MainFragment : Fragment() {
         Snackbar.make(view, requireActivity().resources.getString(resourceID), duration).show()
     }*/
 
+    /*   private fun renderData(appState: AppState) {
+       when (appState) {
+           is AppState.Error -> TODO()
+           is AppState.SuccessOld -> {
+               with(binding) {
+                   movieLoading.visibility = View.GONE
+                   rvMoviesUpcoming.adapter = upcomingAdapter
+                   upcomingAdapter.setMovies(appState.dataMovies)
+                   root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
+               }
+           }
+           is AppState.SuccessNew -> {
+               with(binding) {
+                   movieLoading.visibility = View.GONE
+                   rvMovies.adapter = nowPlayingAdapter
+                   nowPlayingAdapter.setMovies(appState.dataMovies)
+                   /*root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)*/
+               }
+           }
+           is AppState.Loading -> {
+               binding.movieLoading.visibility = View.VISIBLE
+           }
+       }
+   }*/
 }

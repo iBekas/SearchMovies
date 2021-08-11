@@ -17,22 +17,11 @@ data class MovieDTO (
     val overview: String,
     val popularity: Double,
     val posterPath: String,
-    val releaseDate: String,
+    val release_date: String,
     val title: String,
     val video: Boolean,
-    val voteAverage: Double,
-    val voteCount: Long
+    val vote_average: Double,
+    val vote_count: Long
 ): Parcelable
 
-lateinit var movieNow: List<MovieDTO>
-fun setMovieNowToList(movieDTO: List<MovieDTO>){
-    movieNow = movieDTO
-}
-fun getMovieNowToList(): List<MovieDTO> = movieNow
 
-
-lateinit var movieUpcoming: List<MovieDTO>
-fun setMovieUpcomingToList(movieDTO: List<MovieDTO>){
-    movieUpcoming = movieDTO
-}
-fun getMovieUpcomingToList(): List<MovieDTO> = movieUpcoming
