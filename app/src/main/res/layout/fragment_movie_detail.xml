@@ -8,7 +8,7 @@
     android:layout_margin="@dimen/detail_fragment_margin"
     android:elevation="@dimen/card_and_fragment_elevation"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@drawable/fragment_corner">
 
     <ImageView
         android:id="@+id/movie_img_detail"
@@ -78,6 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:layout_marginStart="5dp"
                 android:lineSpacingExtra="4sp"
                 tools:text="Описание фильма" />
         </LinearLayout>
