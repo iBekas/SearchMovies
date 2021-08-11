@@ -128,7 +128,7 @@ class MainFragment : Fragment() {
                             renderData(true, it1)
                         }
                     MAIN_RESPONSE_SUCCESS_UPCOMING_EXTRA->
-                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_NOW_LIST_EXTRA)?.let { it1 ->
+                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_UPCOMING_LIST_EXTRA)?.let { it1 ->
                             renderData(false, it1)
                         }
                     else -> null
