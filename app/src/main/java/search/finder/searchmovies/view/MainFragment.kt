@@ -16,13 +16,10 @@ import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.MovieDTO
-import search.finder.searchmovies.model.NowPlayingDTO
-import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.MainViewModel
-import search.finder.searchmovies.viewmodel.MovieLoader
 
 class MainFragment : Fragment() {
 
@@ -31,6 +28,7 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(movie: MovieDTO) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
+                        .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
                         .replace(
                             R.id.fragment_container,
                             MovieDetailFragment.newInstance(Bundle().apply {
@@ -48,6 +46,7 @@ class MainFragment : Fragment() {
         override fun onItemViewClick(movie: MovieDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
+                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
                     .replace(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
@@ -61,7 +60,6 @@ class MainFragment : Fragment() {
     })
 
 
-    private lateinit var navigation: Navigation
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -72,11 +70,6 @@ class MainFragment : Fragment() {
             return _binding!!
         }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        val activity: MainActivity = context as MainActivity
-        navigation = activity.navigation
-    }
 
     override fun onDestroy() {
         super.onDestroy()

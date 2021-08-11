@@ -47,6 +47,7 @@ class MovieDetailFragment : Fragment() {
         movie?.let { setData(movie) }
     }
 
+
     private fun setData(movie: MovieDTO) {
         with(binding) {
             with(movie) {

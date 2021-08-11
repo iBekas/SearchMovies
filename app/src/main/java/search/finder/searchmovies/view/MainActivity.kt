@@ -12,7 +12,6 @@ import search.finder.searchmovies.databinding.ContentMainBinding
 
 class MainActivity : AppCompatActivity() {
 
-    val navigation = Navigation(supportFragmentManager)
     private lateinit var binding: ContentMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,10 +22,10 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction()
                 .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment)
                 .replace(R.id.fragment_container, MainFragment.newInstance()).commit()
-            /*navigation.addFragment(MainFragment.newInstance(), R.id.fragment_container, true)*/
         }
         initToolbar()
     }
+
 
     private fun initToolbar(): Toolbar {
         setSupportActionBar(binding.toolbar)
