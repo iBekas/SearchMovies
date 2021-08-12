@@ -1,5 +1,7 @@
 package search.finder.searchmovies.view
 
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -13,6 +15,7 @@ import search.finder.searchmovies.databinding.ContentMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ContentMainBinding
+    private val receiver = MainReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +27,12 @@ class MainActivity : AppCompatActivity() {
                 .replace(R.id.fragment_container, MainFragment.newInstance()).commit()
         }
         initToolbar()
+        registerReceiver(receiver, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        unregisterReceiver(receiver)
     }
 
 
