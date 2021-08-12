@@ -21,6 +21,9 @@ import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.MainViewModel
 
+const val ACTION_SEND_MOVIE_TITLE = "SEND_MOVIE_TITLE"
+const val SEND_MOVIE_TITLE = "MOVIE TITLE"
+
 class MainFragment : Fragment() {
 
     private val nowPlayingAdapter: NowPlayingAdapter =
@@ -38,6 +41,14 @@ class MainFragment : Fragment() {
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }
+                val movieTitleToSend = movie.title
+                val intent = Intent()
+                intent.action = ACTION_SEND_MOVIE_TITLE
+                intent.putExtra(SEND_MOVIE_TITLE, movieTitleToSend)
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                context?.let { it.sendBroadcast(intent) }
+
+
             }
         })
 
@@ -98,7 +109,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        var layoutManagerNowPlaying =
+        val layoutManagerNowPlaying =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         layoutManagerNowPlaying.scrollToPosition(Integer.MAX_VALUE / 2)
         val layoutManagerUpcoming =
