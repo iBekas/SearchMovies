@@ -29,7 +29,7 @@ class MainFragment : Fragment() {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
                         .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                        .replace(
+                        .add(
                             R.id.fragment_container,
                             MovieDetailFragment.newInstance(Bundle().apply {
                                 putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
@@ -47,7 +47,7 @@ class MainFragment : Fragment() {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
                     .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                    .replace(
+                    .add(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
                             putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
@@ -76,6 +76,7 @@ class MainFragment : Fragment() {
         //_binding = null
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
+        context?.let{ LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)}
     }
 
     companion object {
