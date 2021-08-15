@@ -120,7 +120,7 @@ class MainFragment : Fragment() {
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> TODO()
-            is AppState.SuccessNow -> {
+            is AppState.SuccessUpcoming -> {
                 with(binding) {
                     movieLoading.visibility = View.GONE
                     rvMoviesUpcoming.adapter = upcomingAdapter
@@ -128,7 +128,7 @@ class MainFragment : Fragment() {
                     root.snackBarShow(R.string.success_now, Snackbar.LENGTH_LONG)
                 }
             }
-            is AppState.SuccessUpcoming -> {
+            is AppState.SuccessNow -> {
                 with(binding) {
                     movieLoading.visibility = View.GONE
                     rvMovies.adapter = nowPlayingAdapter

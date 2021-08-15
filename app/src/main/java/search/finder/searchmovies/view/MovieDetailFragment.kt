@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import coil.api.load
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
 
 
 class MovieDetailFragment : Fragment() {
@@ -51,6 +53,7 @@ class MovieDetailFragment : Fragment() {
     private fun setData(movie: MovieDTO) {
         with(binding) {
             with(movie) {
+                movieImgDetail.load(TMDB_MOVIE_POSTER_URL +poster_path)
                 movieTitleDetail.text = title
                 movieDescDetail.text = overview
                 movieReleaseYearDetail.text = release_date

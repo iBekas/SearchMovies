@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_marginEnd="@dimen/card_margin"
     android:layout_margin="@dimen/card_margin_all"
+    android:layout_marginEnd="@dimen/card_margin"
     android:elevation="@dimen/card_and_fragment_elevation"
     android:outlineAmbientShadowColor="@color/green"
     android:outlineSpotShadowColor="@color/green"
     app:cardCornerRadius="@dimen/card_radius"
     app:cardElevation="@dimen/card_elevation"
-    app:strokeWidth="@dimen/cardview_compat_inset_shadow"
-    app:contentPadding="5dp">
+    app:contentPadding="5dp"
+    app:strokeWidth="@dimen/cardview_compat_inset_shadow">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,7 +23,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/movie_img"
-            android:layout_width="@dimen/pic_movie_width"
+            android:layout_width="match_parent"
             android:layout_height="@dimen/pic_movie_height"
             android:layout_weight="1"
             android:src="@drawable/movie_example" />
@@ -31,10 +31,10 @@
         <TextView
             android:id="@+id/movie_title"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_weight="1"
-            android:maxLines="4"
             android:ems="5"
+            android:maxLines="4"
             android:textSize="@dimen/text_size_on_card"
             android:textStyle="bold"
             tools:text="Лучший фильм" />

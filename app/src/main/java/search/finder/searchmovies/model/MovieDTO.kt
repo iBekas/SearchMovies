@@ -13,9 +13,9 @@ data class UpcomingDTO(val results:List<MovieDTO>): Parcelable
 data class MovieDTO (
     val adult: Boolean,
     val backdrop_path: String,
-    val genre_IDS: List<Long>,
+    val genre_ids: List<Long>,
     val id: Long,
-    val original_Language: String,
+    val original_language: String,
     val original_title: String,
     val overview: String,
     val popularity: Double,

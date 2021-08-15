@@ -4,9 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.recyclerview.widget.RecyclerView
+import coil.api.load
 import search.finder.searchmovies.R
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
 
 class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
@@ -40,7 +43,7 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
         fun init(movie: MovieDTO) {
             with(itemView) {
                 with(movie) {
-                    /*findViewById<AppCompatImageView>(R.id.movie_img) = posterPath*/
+                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL+poster_path)
                     findViewById<TextView>(R.id.movie_title).text = title
                     findViewById<TextView>(R.id.movie_release_year).text =
                         release_date.substring(0, 4)
