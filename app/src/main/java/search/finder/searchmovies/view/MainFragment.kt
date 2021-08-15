@@ -21,6 +21,9 @@ import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.MainViewModel
 
+const val ACTION_SEND_MOVIE_TITLE = "SEND_MOVIE_TITLE"
+const val SEND_MOVIE_TITLE = "MOVIE TITLE"
+
 class MainFragment : Fragment() {
 
     private val nowPlayingAdapter: NowPlayingAdapter =
@@ -29,7 +32,7 @@ class MainFragment : Fragment() {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
                         .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                        .replace(
+                        .add(
                             R.id.fragment_container,
                             MovieDetailFragment.newInstance(Bundle().apply {
                                 putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
@@ -38,6 +41,14 @@ class MainFragment : Fragment() {
                         .addToBackStack("")
                         .commitAllowingStateLoss()
                 }
+                val movieTitleToSend = movie.title
+                val intent = Intent()
+                intent.action = ACTION_SEND_MOVIE_TITLE
+                intent.putExtra(SEND_MOVIE_TITLE, movieTitleToSend)
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
+                context?.let { it.sendBroadcast(intent) }
+
+
             }
         })
 
@@ -47,7 +58,7 @@ class MainFragment : Fragment() {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
                     .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                    .replace(
+                    .add(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
                             putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
@@ -76,6 +87,7 @@ class MainFragment : Fragment() {
         //_binding = null
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
+        context?.let{ LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)}
     }
 
     companion object {
@@ -97,7 +109,7 @@ class MainFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        var layoutManagerNowPlaying =
+        val layoutManagerNowPlaying =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         layoutManagerNowPlaying.scrollToPosition(Integer.MAX_VALUE / 2)
         val layoutManagerUpcoming =
