@@ -2,8 +2,8 @@ package search.finder.searchmovies.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import search.finder.searchmovies.model.Repository
-import search.finder.searchmovies.model.RepositoryImpl
+import search.finder.searchmovies.repository.Repository
+import search.finder.searchmovies.repository.RepositoryImpl
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),

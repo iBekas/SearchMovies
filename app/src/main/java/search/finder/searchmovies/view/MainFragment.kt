@@ -142,13 +142,14 @@ class MainFragment : Fragment() {
             mainView.visibility = View.VISIBLE
             movieLoading.visibility = View.GONE
             if (isNow) {
-                    rvMovies.adapter = nowPlayingAdapter
-                    nowPlayingAdapter.setMovies(movies)
+                rvMovies.adapter = nowPlayingAdapter
+                nowPlayingAdapter.setMovies(movies)
+                root.snackBarShow(R.string.success_now, Snackbar.LENGTH_SHORT)
             } else {
-                    rvMoviesUpcoming.adapter = upcomingAdapter
-                    upcomingAdapter.setMovies(movies)
+                rvMoviesUpcoming.adapter = upcomingAdapter
+                upcomingAdapter.setMovies(movies)
+                root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_SHORT)
             }
-            root.snackBarShow(R.string.success, Snackbar.LENGTH_LONG)
         }
     }
 
