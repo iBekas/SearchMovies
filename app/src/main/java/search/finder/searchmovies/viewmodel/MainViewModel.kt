@@ -2,54 +2,59 @@ package search.finder.searchmovies.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import search.finder.searchmovies.model.NowPlayingDTO
+import search.finder.searchmovies.model.UpcomingDTO
+import search.finder.searchmovies.repository.RemoteDataSource
 import search.finder.searchmovies.repository.Repository
 import search.finder.searchmovies.repository.RepositoryImpl
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
-    private val repository: Repository = RepositoryImpl()
+    private val repository: Repository = RepositoryImpl(RemoteDataSource())
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
 
-    fun getMovieNow() = getDataFromLocalSource(true)
-    fun getMovieUpcoming() = getDataFromLocalSource(false)
+    fun getMoviesFromRemoteSource(api: String, language: String, isNow: Boolean) {
+        liveDataObserver.postValue(AppState.Loading)
+        if(isNow) repository.getMovieFromServerNow(api, language, callBackNow)
+        else repository.getMovieFromServerUpcoming(api, language, callBackUpcoming)
+    }
 
 
-    private fun getDataFromLocalSource(isNow: Boolean) {
-    with(liveDataObserver) {
-        with(repository) {
-            postValue(AppState.Loading)
-            if (isNow)
-                Thread {
-                    Thread.sleep(2100)
-                    postValue(AppState.SuccessNew(getMovieFromServerNow()))
-                }.start()
-            else
-                Thread {
-                    Thread.sleep(2000)
-                    postValue(AppState.SuccessOld(getMovieFromServerUpcoming()))
-                }.start()
+
+    private val callBackNow = object : Callback<NowPlayingDTO> {
+
+        override fun onResponse(call: Call<NowPlayingDTO>, response: Response<NowPlayingDTO>) {
+            val serverResponse: NowPlayingDTO? = response.body()
+            if (response.isSuccessful && serverResponse != null) {
+                liveDataObserver.postValue(AppState.SuccessNow(serverResponse.results))
+            } else {
+                //TODO("Ответ нас не устраивает")
+            }
+        }
+
+        override fun onFailure(call: Call<NowPlayingDTO>, t: Throwable) {
+            TODO("Not yet implemented")
         }
     }
-}
 
-    /* Вариант с одним потоком
-    private fun getDataFromLocalSource(isNow: Boolean) {
-        val lock = ReentrantLock()
-        liveDataObserver.postValue(AppState.Loading)
-        Thread {
-            try {
-                lock.lock()
-                Thread.sleep(2000)
-                with(liveDataObserver) {
-                    with(repository) {
-                        if (isNow) postValue(AppState.SuccessNew(getMovieFromLocalNow()))
-                        else postValue(AppState.SuccessOld(getMovieFromLocalUpcoming()))
-                    }
-                }
-            } finally {
-                lock.unlock()
+
+    private val callBackUpcoming = object : Callback<UpcomingDTO> {
+
+        override fun onResponse(call: Call<UpcomingDTO>, response: Response<UpcomingDTO>) {
+            val serverResponse: UpcomingDTO? = response.body()
+            if (response.isSuccessful && serverResponse != null) {
+                liveDataObserver.postValue(AppState.SuccessNow(serverResponse.results))
+            } else {
+                //TODO("Ответ нас не устраивает")
             }
-        }.start()
-    }*/
+        }
+
+        override fun onFailure(call: Call<UpcomingDTO>, t: Throwable) {
+            TODO("Not yet implemented")
+        }
+    }
 }

@@ -47,8 +47,6 @@ class MainFragment : Fragment() {
                 intent.putExtra(SEND_MOVIE_TITLE, movieTitleToSend)
                 intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
                 context?.let { it.sendBroadcast(intent) }
-
-
             }
         })
 
