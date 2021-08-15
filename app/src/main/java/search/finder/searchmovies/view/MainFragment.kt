@@ -1,24 +1,23 @@
 package search.finder.searchmovies.view
 
-import android.content.BroadcastReceiver
-import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
+import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.MainViewModel
 
 const val ACTION_SEND_MOVIE_TITLE = "SEND_MOVIE_TITLE"
@@ -79,22 +78,15 @@ class MainFragment : Fragment() {
             return _binding!!
         }
 
-
     override fun onDestroy() {
         super.onDestroy()
-        //_binding = null
+        _binding = null
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
-        context?.let{ LocalBroadcastManager.getInstance(it).unregisterReceiver(loadResultsReceiver)}
     }
 
     companion object {
         fun newInstance() = MainFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        context?.let{ LocalBroadcastManager.getInstance(it).registerReceiver(loadResultsReceiver, IntentFilter(MAIN_INTENT_FILTER))}
     }
 
     override fun onCreateView(
@@ -102,7 +94,6 @@ class MainFragment : Fragment() {
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
         setupRecyclerView()
-        setMovieLanguage()
         return binding.root
     }
 
@@ -119,46 +110,34 @@ class MainFragment : Fragment() {
         }
     }
 
-    private fun setMovieLanguage(){
-        with(binding){
-            mainView.visibility = View.GONE
-            movieLoading.visibility = View.VISIBLE
-        }
-        context?.startService(Intent(context, MainService::class.java).apply {
-            putExtra(LANGUAGE_EXTRA, "ru-RU")
-        })
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", true)
+        viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", false)
     }
 
-    private val loadResultsReceiver: BroadcastReceiver = object : BroadcastReceiver(){
-        override fun onReceive(context: Context?, intent: Intent?) {
-            intent?.let{
-                when(it.getStringExtra(MAIN_LOAD_RESULT_EXTRA)){
-                    MAIN_RESPONSE_SUCCESS_NOW_EXTRA->
-                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_NOW_LIST_EXTRA)?.let { it1 ->
-                            renderData(true, it1)
-                        }
-                    MAIN_RESPONSE_SUCCESS_UPCOMING_EXTRA->
-                        it.getParcelableArrayListExtra<MovieDTO>(MAIN_MOVIE_UPCOMING_LIST_EXTRA)?.let { it1 ->
-                            renderData(false, it1)
-                        }
-                    else -> null
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Error -> TODO()
+            is AppState.SuccessNow -> {
+                with(binding) {
+                    movieLoading.visibility = View.GONE
+                    rvMoviesUpcoming.adapter = upcomingAdapter
+                    upcomingAdapter.setMovies(appState.dataMovies)
+                    root.snackBarShow(R.string.success_now, Snackbar.LENGTH_LONG)
                 }
             }
-        }
-    }
-
-    private fun renderData(isNow: Boolean, movies: ArrayList<MovieDTO>){
-        with(binding) {
-            mainView.visibility = View.VISIBLE
-            movieLoading.visibility = View.GONE
-            if (isNow) {
-                rvMovies.adapter = nowPlayingAdapter
-                nowPlayingAdapter.setMovies(movies)
-                root.snackBarShow(R.string.success_now, Snackbar.LENGTH_SHORT)
-            } else {
-                rvMoviesUpcoming.adapter = upcomingAdapter
-                upcomingAdapter.setMovies(movies)
-                root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_SHORT)
+            is AppState.SuccessUpcoming -> {
+                with(binding) {
+                    movieLoading.visibility = View.GONE
+                    rvMovies.adapter = nowPlayingAdapter
+                    nowPlayingAdapter.setMovies(appState.dataMovies)
+                    root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)
+                }
+            }
+            is AppState.Loading -> {
+                binding.movieLoading.visibility = View.VISIBLE
             }
         }
     }

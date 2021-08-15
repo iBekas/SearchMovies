@@ -47,7 +47,7 @@ class MainViewModel(
         override fun onResponse(call: Call<UpcomingDTO>, response: Response<UpcomingDTO>) {
             val serverResponse: UpcomingDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
-                liveDataObserver.postValue(AppState.SuccessNow(serverResponse.results))
+                liveDataObserver.postValue(AppState.SuccessUpcoming(serverResponse.results))
             } else {
                 //TODO("Ответ нас не устраивает")
             }

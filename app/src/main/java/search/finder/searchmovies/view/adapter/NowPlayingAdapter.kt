@@ -11,9 +11,9 @@ import search.finder.searchmovies.model.MovieDTO
 class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<NowPlayingAdapter.NowPlayingHolder>() {
 
-    private lateinit var moviesData: ArrayList<MovieDTO>
+    private lateinit var moviesData: List<MovieDTO>
 
-    fun setMovies(list: ArrayList<MovieDTO>) {
+    fun setMovies(list: List<MovieDTO>) {
         moviesData = list
         notifyDataSetChanged()
     }

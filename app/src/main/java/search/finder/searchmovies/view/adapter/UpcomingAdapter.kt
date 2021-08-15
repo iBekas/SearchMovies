@@ -11,9 +11,9 @@ import search.finder.searchmovies.model.MovieDTO
 class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     RecyclerView.Adapter<UpcomingAdapter.UpcomingHolder>() {
 
-    private lateinit var moviesData: ArrayList<MovieDTO>
+    private lateinit var moviesData: List<MovieDTO>
 
-    fun setMovies(list: ArrayList<MovieDTO>) {
+    fun setMovies(list: List<MovieDTO>) {
         moviesData = list
         notifyDataSetChanged()
     }
