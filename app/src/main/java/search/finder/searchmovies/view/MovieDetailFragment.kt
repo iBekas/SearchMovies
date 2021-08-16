@@ -4,11 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.MovieDetailsDTO
+import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
+import search.finder.searchmovies.viewmodel.DetailState
+import search.finder.searchmovies.viewmodel.DetailViewModel
 
 
 class MovieDetailFragment : Fragment() {
@@ -20,6 +27,10 @@ class MovieDetailFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    private val viewModel: DetailViewModel by lazy {
+        ViewModelProvider(this).get(DetailViewModel::class.java)
     }
 
     private var _binding: FragmentMovieDetailBinding? = null
@@ -42,15 +53,21 @@ class MovieDetailFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        //val movie = arguments?.getParcelable(KEY_MOVIE) as? Movie
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
         val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
-        movie?.let { setData(movie) }
+        movie?.let {viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU")}
     }
 
+    private fun renderData(appState: DetailState) {
+        when (appState) {
+            is DetailState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+            is DetailState.Success -> setData(appState.dataMovie)
+        }
+    }
 
-    private fun setData(movie: MovieDTO) {
+    private fun setData(movie: MovieDetailsDTO) {
         with(binding) {
             with(movie) {
                 movieImgDetail.load(TMDB_MOVIE_POSTER_URL +poster_path)

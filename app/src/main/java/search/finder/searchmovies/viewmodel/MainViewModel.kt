@@ -1,5 +1,6 @@
 package search.finder.searchmovies.viewmodel
 
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import retrofit2.Call
@@ -10,6 +11,7 @@ import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.repository.RemoteDataSource
 import search.finder.searchmovies.repository.Repository
 import search.finder.searchmovies.repository.RepositoryImpl
+import java.lang.NullPointerException
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
@@ -32,12 +34,12 @@ class MainViewModel(
             if (response.isSuccessful && serverResponse != null) {
                 liveDataObserver.postValue(AppState.SuccessNow(serverResponse.results))
             } else {
-                //TODO("Ответ нас не устраивает")
+                liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
         }
 
         override fun onFailure(call: Call<NowPlayingDTO>, t: Throwable) {
-            TODO("Not yet implemented")
+            liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }
     }
 
@@ -49,12 +51,12 @@ class MainViewModel(
             if (response.isSuccessful && serverResponse != null) {
                 liveDataObserver.postValue(AppState.SuccessUpcoming(serverResponse.results))
             } else {
-                //TODO("Ответ нас не устраивает")
+                liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
         }
 
         override fun onFailure(call: Call<UpcomingDTO>, t: Throwable) {
-            TODO("Not yet implemented")
+            liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }
     }
 }

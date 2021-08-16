@@ -4,10 +4,7 @@ import com.google.gson.GsonBuilder
 import retrofit2.Callback
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import search.finder.searchmovies.model.NowPlayingDTO
-import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
-import search.finder.searchmovies.model.TMDB_API_URL
-import search.finder.searchmovies.model.UpcomingDTO
+import search.finder.searchmovies.model.*
 
 class RemoteDataSource {
     private val moviesAPI = Retrofit.Builder()
@@ -22,4 +19,9 @@ class RemoteDataSource {
     fun getMoviesUpcoming(api: String, language: String, callback: Callback<UpcomingDTO>) {
         moviesAPI.getMoviesUpcoming(TMDB_API_KEY_VALUE, api, language).enqueue(callback)
     }
+
+    fun getMovieDetails(id: Long, api: String, language: String, callback: Callback<MovieDetailsDTO>) {
+        moviesAPI.getMovieDetails(TMDB_API_KEY_VALUE, id, api, language).enqueue(callback)
+    }
+
 }
