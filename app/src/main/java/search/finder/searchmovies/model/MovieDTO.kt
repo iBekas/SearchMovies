@@ -23,7 +23,10 @@ data class MovieDTO (
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Long
-): Parcelable
+): Parcelable {
+    val isAdult
+        get() = adult
+}
 
 @Parcelize
 data class MovieDetailsDTO (
@@ -52,7 +55,10 @@ data class MovieDetailsDTO (
     val video: Boolean,
     val vote_average: Double,
     val vote_count: Long
-) : Parcelable
+) : Parcelable {
+    val isAdult
+        get() = adult
+}
 
 @Parcelize
 data class BelongsToCollection (

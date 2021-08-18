@@ -39,6 +39,18 @@
             android:textStyle="bold"
             tools:text="Лучший фильм" />
 
+        <ImageView
+            android:id="@+id/movie_adult_img"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_movieadult"
+            android:visibility="gone"
+            app:tint="#FF00" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -66,6 +78,7 @@
                 android:textSize="@dimen/text_size_on_card"
                 android:textStyle="bold"
                 tools:text="4.2" />
+
 
         </LinearLayout>
     </LinearLayout>

@@ -39,6 +39,18 @@
             android:textStyle="bold"
             tools:text="Лучший фильм" />
 
+        <ImageView
+            android:id="@+id/movie_adult_img_upcoming"
+            android:layout_width="25dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_movieadult"
+            android:visibility="gone"
+            app:tint="#FF00" />
+
         <TextView
             android:id="@+id/movie_expect_data_upcoming"
             android:layout_width="match_parent"
