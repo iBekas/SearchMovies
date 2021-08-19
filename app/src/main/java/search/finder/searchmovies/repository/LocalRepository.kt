@@ -1,13 +1,14 @@
 package search.finder.searchmovies.repository
 
 import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.MovieDetailsDTO
 
 interface LocalRepository {
-    fun getAllMoviesHistory(): List<MovieDTO>
-    fun saveMovieHistory(movie:MovieDTO)
+    fun getAllMoviesHistory(): List<MovieDetailsDTO>
+    fun saveMovieHistory(movie:MovieDetailsDTO)
     fun deleteMoviesHistory()
 
-    fun getAllFavoriteMovies(): List<MovieDTO>
-    fun saveFavorite(movie:MovieDTO)
-    fun deleteFavoriteMovie(movie:MovieDTO)
+    fun getAllFavoriteMovies(): List<MovieDetailsDTO>
+    fun saveFavorite(movie:MovieDetailsDTO)
+    fun deleteFavoriteMovie(movie:MovieDetailsDTO)
 }
