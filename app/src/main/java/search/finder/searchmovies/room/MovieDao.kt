@@ -6,13 +6,13 @@ import androidx.room.*
 interface MovieDao {
 
     @Query("SELECT * FROM table_movies")
-    fun selectAll(): List<MovieEntity>
+    fun getAllHistory(): List<MovieEntity>
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(movie: MovieEntity)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMovieHistory(movie: MovieEntity)
 
-    @Delete
-    fun deleteMovie(movie: MovieEntity)
+    @Query("DELETE FROM table_movies")
+    fun deleteAllMoviesHistory()
 
     @Query("SELECT * FROM table_favorite_movies")
     fun getAllFavoriteMovies():List<FavoriteMovieEntity>
@@ -21,5 +21,5 @@ interface MovieDao {
     fun insertFavorite(movie:FavoriteMovieEntity)
 
     @Delete
-    fun deleteMovie(movie: FavoriteMovieEntity)
+    fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
 }

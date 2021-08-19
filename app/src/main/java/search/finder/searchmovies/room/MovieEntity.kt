@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey
     @Entity(tableName = "table_favorite_movies")
     data class FavoriteMovieEntity(
         @PrimaryKey
-        val movieId: Int,
+        val movieId: Long,
         @ColumnInfo(name = "release_date")
         val releaseDate: String = "",
         @ColumnInfo(name = "poster_path")
         val image: String? = "",
         @ColumnInfo(name = "title")
-        val name: String = "",
+        val title: String = "",
         @ColumnInfo(name = "overview")
         val overview: String = "",
         @ColumnInfo(name = "vote_average")
@@ -25,13 +25,13 @@ import androidx.room.PrimaryKey
     @Entity(tableName = "table_movies")
     data class MovieEntity(
         @PrimaryKey
-        val movieId: Int,
+        val movieId: Long,
         @ColumnInfo(name = "release_date")
         val releaseDate: String = "",
         @ColumnInfo(name = "poster_path")
         val image: String? = "",
         @ColumnInfo(name = "title")
-        val name: String = "",
+        val title: String = "",
         @ColumnInfo(name = "overview")
         val overview: String = "",
         @ColumnInfo(name = "vote_average")
