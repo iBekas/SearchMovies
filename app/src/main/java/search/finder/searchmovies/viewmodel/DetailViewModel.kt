@@ -6,17 +6,15 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import search.finder.searchmovies.app.App
-import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.repository.DetailRepositoryImpl
 import search.finder.searchmovies.repository.LocalRepositoryImpl
 import search.finder.searchmovies.repository.RemoteDataSource
-import java.lang.NullPointerException
 
 class DetailViewModel(
-    private val liveDataObserver: MutableLiveData<DetailState> = MutableLiveData(),
+    private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
     private val repository: DetailRepositoryImpl = DetailRepositoryImpl(RemoteDataSource()),
-    private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(App.getMovieDao())
+    private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(App.getMovieDao(), App.getFavoriteMovieDao())
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
 
@@ -35,14 +33,14 @@ class DetailViewModel(
         override fun onResponse(call: Call<MovieDetailsDTO>, response: Response<MovieDetailsDTO>) {
             val serverResponse: MovieDetailsDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
-                liveDataObserver.postValue(DetailState.Success(serverResponse))
+                liveDataObserver.postValue(AppState.SuccessDetail(serverResponse))
             } else {
-                liveDataObserver.postValue(DetailState.Error(NullPointerException()))
+                liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
         }
 
         override fun onFailure(call: Call<MovieDetailsDTO>, t: Throwable) {
-            liveDataObserver.postValue(DetailState.Error(NullPointerException())) //TODO что-то адекватное
+            liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }
     }
 }

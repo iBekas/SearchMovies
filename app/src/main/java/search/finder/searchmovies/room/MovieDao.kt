@@ -13,12 +13,16 @@ interface MovieDao {
 
     @Query("DELETE FROM table_movies")
     fun deleteAllMoviesHistory()
+}
+
+@Dao
+interface FavoriteMovieDao {
 
     @Query("SELECT * FROM table_favorite_movies")
-    fun getAllFavoriteMovies():List<FavoriteMovieEntity>
+    fun getAllFavoriteMovies(): List<FavoriteMovieEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertFavorite(movie:FavoriteMovieEntity)
+    fun insertFavorite(movie: FavoriteMovieEntity)
 
     @Delete
     fun deleteFavoriteMovie(movie: FavoriteMovieEntity)

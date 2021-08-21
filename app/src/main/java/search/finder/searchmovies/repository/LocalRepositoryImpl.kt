@@ -1,14 +1,14 @@
 package search.finder.searchmovies.repository
 
-import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
+import search.finder.searchmovies.room.FavoriteMovieDao
 import search.finder.searchmovies.room.MovieDao
 import search.finder.searchmovies.utils.convertEntityToMovieFavorite
 import search.finder.searchmovies.utils.convertEntityToMovieHistory
 import search.finder.searchmovies.utils.convertMovieFavoriteToEntity
 import search.finder.searchmovies.utils.convertMovieHistoryToEntity
 
-class LocalRepositoryImpl(private val movieDao: MovieDao) : LocalRepository {
+class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMovieDao: FavoriteMovieDao) : LocalRepository {
     override fun getAllMoviesHistory(): List<MovieDetailsDTO> {
         return convertEntityToMovieHistory(movieDao.getAllHistory())
     }
@@ -22,14 +22,14 @@ class LocalRepositoryImpl(private val movieDao: MovieDao) : LocalRepository {
     }
 
     override fun getAllFavoriteMovies(): List<MovieDetailsDTO> {
-        return convertEntityToMovieFavorite(movieDao.getAllFavoriteMovies())
+        return convertEntityToMovieFavorite(favoriteMovieDao.getAllFavoriteMovies())
     }
 
     override fun saveFavorite(movie: MovieDetailsDTO) {
-        movieDao.insertFavorite(convertMovieFavoriteToEntity(movie))
+        favoriteMovieDao.insertFavorite(convertMovieFavoriteToEntity(movie))
     }
 
     override fun deleteFavoriteMovie(movie: MovieDetailsDTO) {
-        movieDao.deleteFavoriteMovie(convertMovieFavoriteToEntity(movie))
+        favoriteMovieDao.deleteFavoriteMovie(convertMovieFavoriteToEntity(movie))
     }
 }

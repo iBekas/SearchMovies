@@ -17,14 +17,14 @@ import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
-import search.finder.searchmovies.viewmodel.DetailState
+import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.DetailViewModel
 
 
 class MovieDetailFragment : Fragment() {
 
     companion object {
-        const val NAME_SHARED_PREFERENCE = "KEY"
+        const val LIKE_SHARED_PREFERENCE = "KEY"
         const val LIKE = "LIKE"
         var isLike = 0
         const val KEY_MOVIE = "KEY"
@@ -63,13 +63,18 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
         val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
-        movie?.let {viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU")}
+        movie?.let { viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU") }
     }
 
-    private fun renderData(appState: DetailState) {
+    private fun renderData(appState: AppState) {
         when (appState) {
-            is DetailState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
-            is DetailState.Success -> setData(appState.dataMovie)
+            is AppState.Error -> Toast.makeText(
+                requireActivity(),
+                "Ошибка загрузки",
+                Toast.LENGTH_SHORT
+            ).show()
+            is AppState.SuccessDetail -> setData(appState.dataMovie)
+            else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -77,23 +82,30 @@ class MovieDetailFragment : Fragment() {
         viewModel.saveMovieHistoryToDb(movie)
         with(binding) {
             with(movie) {
-                movieImgDetail.load(TMDB_MOVIE_POSTER_URL +poster_path)
+                movieImgDetail.load(TMDB_MOVIE_POSTER_URL + poster_path)
                 movieTitleDetail.text = title
                 movieDescDetail.text = overview
                 movieReleaseYearDetail.text = release_date
                 movieVotesAverageDetail.text = vote_average.toString()
                 save_movie.setOnClickListener {
-                    var sharedPref: SharedPreferences? = activity?.getSharedPreferences(
-                        NAME_SHARED_PREFERENCE, Context.MODE_PRIVATE)
-                    sharedPref?.getInt(LIKE, 0)
-
-                    isLike = if(sharedPref?.getInt(LIKE, 0) == 0) {
+                    val sharedPref: SharedPreferences? = activity?.getSharedPreferences(
+                        LIKE_SHARED_PREFERENCE, Context.MODE_PRIVATE
+                    )
+                    isLike = if (sharedPref?.getInt(LIKE, 0) == 0) {
                         viewModel.saveFavoriteMovieToDb(movie)
-                        Toast.makeText(requireContext(), "Добавлено в избранное", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Добавлено в избранное",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         1
                     } else {
                         viewModel.deleteFavoriteMovieToDb(movie)
-                        Toast.makeText(requireContext(), "Удалено из избранного", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            "Удалено из избранного",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         0
                     }
                     val editor = sharedPref?.edit()

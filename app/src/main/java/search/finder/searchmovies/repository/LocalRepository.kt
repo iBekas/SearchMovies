@@ -1,6 +1,5 @@
 package search.finder.searchmovies.repository
 
-import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
 
 interface LocalRepository {

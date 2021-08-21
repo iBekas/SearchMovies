@@ -6,4 +6,5 @@ import androidx.room.RoomDatabase
 @Database(entities = [MovieEntity::class, FavoriteMovieEntity::class], version = 1)
 abstract class MoviesDataBase: RoomDatabase() {
     abstract fun movieDao(): MovieDao
+    abstract fun favoriteMovieDao(): FavoriteMovieDao
 }
