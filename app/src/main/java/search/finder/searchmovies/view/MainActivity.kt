@@ -58,7 +58,9 @@ class MainActivity : AppCompatActivity() {
                 return true
             }
             R.id.favorite -> {
-                makeText(this, "Держи избранное", Toast.LENGTH_SHORT).show()
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                    .add(R.id.fragment_container, FavoriteFragment.newInstance()).addToBackStack("").commit()
                 return true
             }
             R.id.history -> {

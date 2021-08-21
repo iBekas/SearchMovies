@@ -1,7 +1,5 @@
 package search.finder.searchmovies.view
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,9 +22,7 @@ import search.finder.searchmovies.viewmodel.DetailViewModel
 class MovieDetailFragment : Fragment() {
 
     companion object {
-        const val LIKE_SHARED_PREFERENCE = "KEY"
-        const val LIKE = "LIKE"
-        var isLike = 0
+        var isLike = true
         const val KEY_MOVIE = "KEY"
         fun newInstance(bundle: Bundle): MovieDetailFragment {
             val fragment = MovieDetailFragment()
@@ -87,31 +83,16 @@ class MovieDetailFragment : Fragment() {
                 movieDescDetail.text = overview
                 movieReleaseYearDetail.text = release_date
                 movieVotesAverageDetail.text = vote_average.toString()
-                    /*save_movie.setOnClickListener {
-                    val sharedPref: SharedPreferences? = activity?.getSharedPreferences(
-                        LIKE_SHARED_PREFERENCE, Context.MODE_PRIVATE
-                    )
-                    isLike = if (sharedPref?.getInt(LIKE, 0) == 0) {
-                        viewModel.saveFavoriteMovieToDb(movie)
-                        Toast.makeText(
-                            requireContext(),
-                            "Добавлено в избранное",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        1
-                    } else {
-                        viewModel.deleteFavoriteMovieToDb(movie)
-                        Toast.makeText(
-                            requireContext(),
-                            "Удалено из избранного",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        0
-                    }
-                    val editor = sharedPref?.edit()
-                    editor.let { it?.putInt(LIKE, isLike) }
-                    editor?.apply()
-                }*/
+                save_movie.setOnClickListener {
+                    viewModel.saveFavoriteMovieToDb(movie)
+                    Toast.makeText(requireContext(), "Добавлено в избранное", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                delete_movie.setOnClickListener {
+                    viewModel.deleteFavoriteMovieFromDb(movie)
+                    Toast.makeText(requireContext(), "Удалено из избранного", Toast.LENGTH_SHORT)
+                        .show()
+                }
             }
         }
 

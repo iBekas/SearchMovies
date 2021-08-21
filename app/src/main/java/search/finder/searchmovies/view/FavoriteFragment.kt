@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import search.finder.searchmovies.R
-import search.finder.searchmovies.databinding.HistoryMovieFragmentBinding
+import search.finder.searchmovies.databinding.FavoriteFragmentBinding
 import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.utils.convertMovieDetailDtoToMovieDto
 import search.finder.searchmovies.view.adapter.HistoryAndFavoriteAdapter
@@ -17,7 +17,7 @@ import search.finder.searchmovies.view.adapter.OnHistoryOrFavoriteItemClick
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.HistoryAndFavoriteMovieViewModel
 
-class HistoryMovieFragment : Fragment() {
+class FavoriteFragment : Fragment() {
 
     private val historyAndFavoriteAdapter = HistoryAndFavoriteAdapter(object :
         OnHistoryOrFavoriteItemClick {
@@ -38,13 +38,14 @@ class HistoryMovieFragment : Fragment() {
     })
 
     companion object {
-        fun newInstance() = HistoryMovieFragment()
+        fun newInstance() = FavoriteFragment()
     }
 
-    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy { ViewModelProvider(this).get(HistoryAndFavoriteMovieViewModel::class.java) }
-    private var _binding: HistoryMovieFragmentBinding? = null
-    private val binding: HistoryMovieFragmentBinding
-        get(): HistoryMovieFragmentBinding {
+    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy { ViewModelProvider(this).get(
+        HistoryAndFavoriteMovieViewModel::class.java) }
+    private var _binding: FavoriteFragmentBinding? = null
+    private val binding: FavoriteFragmentBinding
+        get(): FavoriteFragmentBinding {
             return _binding!!
         }
 
@@ -52,7 +53,7 @@ class HistoryMovieFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = HistoryMovieFragmentBinding.inflate(inflater, container, false)
+        _binding = FavoriteFragmentBinding.inflate(inflater, container, false)
         setupRecyclerView()
         return binding.root
     }
@@ -61,13 +62,12 @@ class HistoryMovieFragment : Fragment() {
         super.onDestroy()
         _binding = null
         historyAndFavoriteAdapter.removeListener()
-        viewModelAndFavorite.deleteMoviesHistory()
     }
 
     private fun setupRecyclerView() {
         val layoutManagerHistory =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rvMoviesHistory.layoutManager = layoutManagerHistory
+        binding.rvMoviesFavorite.layoutManager = layoutManagerHistory
 
 
     }
@@ -75,15 +75,15 @@ class HistoryMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModelAndFavorite.getLiveData().observe(viewLifecycleOwner, {renderData(it)})
-        viewModelAndFavorite.getAllMoviesHistory()
+        viewModelAndFavorite.getAllMoviesFavorite()
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
             is AppState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
-            is AppState.SuccessHistory -> {
+            is AppState.SuccessFavorite -> {
                 with(binding) {
-                    rvMoviesHistory.adapter = historyAndFavoriteAdapter
+                    rvMoviesFavorite.adapter = historyAndFavoriteAdapter
                     historyAndFavoriteAdapter.setMovies(appState.dataMovies)
                 }
             }

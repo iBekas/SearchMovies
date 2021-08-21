@@ -12,8 +12,8 @@ import search.finder.searchmovies.R
 import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
 
-class HistoryAdapter(var onHistoryItemClick: OnHistoryItemClick?) :
-    RecyclerView.Adapter<HistoryAdapter.HistoryHolder>() {
+class HistoryAndFavoriteAdapter(var onHistoryOrFavoriteItemClick: OnHistoryOrFavoriteItemClick?) :
+    RecyclerView.Adapter<HistoryAndFavoriteAdapter.HistoryHolder>() {
 
     private lateinit var moviesData: List<MovieDetailsDTO>
 
@@ -23,7 +23,7 @@ class HistoryAdapter(var onHistoryItemClick: OnHistoryItemClick?) :
     }
 
     fun removeListener() {
-        onHistoryItemClick = null
+        onHistoryOrFavoriteItemClick = null
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HistoryHolder {
@@ -50,7 +50,7 @@ class HistoryAdapter(var onHistoryItemClick: OnHistoryItemClick?) :
                         release_date.substring(0, 4)
                     findViewById<TextView>(R.id.movie_votes_average).text =
                         vote_average.toString()
-                    setOnClickListener { onHistoryItemClick?.onItemHistoryClick(movie) }
+                    setOnClickListener { onHistoryOrFavoriteItemClick?.onItemHistoryClick(movie) }
                 }
             }
         }
