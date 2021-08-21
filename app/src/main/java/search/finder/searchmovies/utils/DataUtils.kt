@@ -91,3 +91,21 @@ fun convertMovieFavoriteToEntity(movie: MovieDetailsDTO): FavoriteMovieEntity {
         movie.adult
     )
 }
+
+fun convertMovieDetailDtoToMovieDto(movie: MovieDetailsDTO): MovieDTO {
+    return MovieDTO(
+        movie.adult!!,
+        "",
+        null,
+        movie.id,
+        "",
+        "",
+        movie.overview,
+        0.0,
+        movie.poster_path,
+        movie.release_date,
+        movie.title,
+        false,
+        movie.vote_average,
+    )
+}

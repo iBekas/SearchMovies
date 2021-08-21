@@ -61,6 +61,12 @@ class MainActivity : AppCompatActivity() {
                 makeText(this, "Держи избранное", Toast.LENGTH_SHORT).show()
                 return true
             }
+            R.id.history -> {
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                    .add(R.id.fragment_container, HistoryMovieFragment.newInstance()).addToBackStack("").commit()
+                return true
+            }
         }
 
         return super.onOptionsItemSelected(item)

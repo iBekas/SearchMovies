@@ -140,6 +140,7 @@ class MainFragment : Fragment() {
             is AppState.Loading -> {
                 binding.movieLoading.visibility = View.VISIBLE
             }
+            else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
         }
     }
 

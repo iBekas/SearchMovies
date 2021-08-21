@@ -87,7 +87,7 @@ class MovieDetailFragment : Fragment() {
                 movieDescDetail.text = overview
                 movieReleaseYearDetail.text = release_date
                 movieVotesAverageDetail.text = vote_average.toString()
-                save_movie.setOnClickListener {
+                    /*save_movie.setOnClickListener {
                     val sharedPref: SharedPreferences? = activity?.getSharedPreferences(
                         LIKE_SHARED_PREFERENCE, Context.MODE_PRIVATE
                     )
@@ -111,7 +111,7 @@ class MovieDetailFragment : Fragment() {
                     val editor = sharedPref?.edit()
                     editor.let { it?.putInt(LIKE, isLike) }
                     editor?.apply()
-                }
+                }*/
             }
         }
 
