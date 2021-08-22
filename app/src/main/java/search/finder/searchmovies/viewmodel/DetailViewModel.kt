@@ -14,14 +14,18 @@ import search.finder.searchmovies.repository.RemoteDataSource
 class DetailViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
     private val repository: DetailRepositoryImpl = DetailRepositoryImpl(RemoteDataSource()),
-    private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(App.getMovieDao(), App.getFavoriteMovieDao())
+    private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
+        App.getMovieDao(),
+        App.getFavoriteMovieDao()
+    )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
 
     fun saveMovieHistoryToDb(movie: MovieDetailsDTO) = localRepository.saveMovieHistory(movie)
 
     fun saveFavoriteMovieToDb(movie: MovieDetailsDTO) = localRepository.saveFavorite(movie)
-    fun deleteFavoriteMovieFromDb(movie: MovieDetailsDTO) = localRepository.deleteFavoriteMovie(movie)
+    fun deleteFavoriteMovieFromDb(movie: MovieDetailsDTO) =
+        localRepository.deleteFavoriteMovie(movie)
 
 
     fun getMovieFromRemoteSource(id: Long, api: String, language: String) {

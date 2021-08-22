@@ -36,15 +36,15 @@ class HistoryAndFavoriteAdapter(var onHistoryOrFavoriteItemClick: OnHistoryOrFav
         holder.init(moviesData[position])
     }
 
-    override fun getItemCount() =  moviesData.size
+    override fun getItemCount() = moviesData.size
 
 
     inner class HistoryHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(movie: MovieDetailsDTO) {
             with(itemView) {
                 with(movie) {
-                    if(isAdult) movie_adult_img.visibility =  View.VISIBLE
-                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL +poster_path)
+                    if (isAdult) movie_adult_img.visibility = View.VISIBLE
+                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL + poster_path)
                     findViewById<TextView>(R.id.movie_title).text = title
                     findViewById<TextView>(R.id.movie_release_year).text =
                         release_date.substring(0, 4)

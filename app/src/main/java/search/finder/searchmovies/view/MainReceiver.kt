@@ -3,7 +3,6 @@ package search.finder.searchmovies.view
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.res.Configuration
 import android.provider.Settings
 import android.widget.Toast
 
@@ -11,7 +10,11 @@ class MainReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val onAir: Boolean = isAirplaneModeOn(context)
-        if (onAir) Toast.makeText(context, "Спасибо! Теперь могу загружать фильмы", Toast.LENGTH_SHORT)
+        if (onAir) Toast.makeText(
+            context,
+            "Спасибо! Теперь могу загружать фильмы",
+            Toast.LENGTH_SHORT
+        )
             .show()
         else Toast.makeText(context, "Выключи! Я же не смогу загрузить фильмы.", Toast.LENGTH_SHORT)
             .show()

@@ -1,6 +1,5 @@
 package search.finder.searchmovies.viewmodel
 
-import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import retrofit2.Call
@@ -11,7 +10,6 @@ import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.repository.RemoteDataSource
 import search.finder.searchmovies.repository.Repository
 import search.finder.searchmovies.repository.RepositoryImpl
-import java.lang.NullPointerException
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
@@ -28,7 +26,6 @@ class MainViewModel(
 
 
     private val callBackNow = object : Callback<NowPlayingDTO> {
-
         override fun onResponse(call: Call<NowPlayingDTO>, response: Response<NowPlayingDTO>) {
             val serverResponse: NowPlayingDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
@@ -37,7 +34,6 @@ class MainViewModel(
                 liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
         }
-
         override fun onFailure(call: Call<NowPlayingDTO>, t: Throwable) {
             liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }
@@ -45,7 +41,6 @@ class MainViewModel(
 
 
     private val callBackUpcoming = object : Callback<UpcomingDTO> {
-
         override fun onResponse(call: Call<UpcomingDTO>, response: Response<UpcomingDTO>) {
             val serverResponse: UpcomingDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
@@ -54,7 +49,6 @@ class MainViewModel(
                 liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
         }
-
         override fun onFailure(call: Call<UpcomingDTO>, t: Throwable) {
             liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }

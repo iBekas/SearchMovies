@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
@@ -22,7 +21,6 @@ import search.finder.searchmovies.viewmodel.DetailViewModel
 class MovieDetailFragment : Fragment() {
 
     companion object {
-        var isLike = true
         const val KEY_MOVIE = "KEY"
         fun newInstance(bundle: Bundle): MovieDetailFragment {
             val fragment = MovieDetailFragment()
@@ -57,7 +55,7 @@ class MovieDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
         movie?.let { viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU") }
     }

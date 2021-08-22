@@ -37,15 +37,15 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
         holder.init(moviesData[positionInList])
     }
 
-    override fun getItemCount() =  Integer.MAX_VALUE
+    override fun getItemCount() = Integer.MAX_VALUE
 
 
     inner class NowPlayingHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun init(movie: MovieDTO) {
             with(itemView) {
                 with(movie) {
-                    if(isAdult) movie_adult_img.visibility =  View.VISIBLE
-                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL+poster_path)
+                    if (isAdult) movie_adult_img.visibility = View.VISIBLE
+                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL + poster_path)
                     findViewById<TextView>(R.id.movie_title).text = title
                     findViewById<TextView>(R.id.movie_release_year).text =
                         release_date.substring(0, 4)

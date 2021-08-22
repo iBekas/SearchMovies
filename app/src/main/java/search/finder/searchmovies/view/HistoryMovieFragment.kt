@@ -24,11 +24,19 @@ class HistoryMovieFragment : Fragment() {
         override fun onItemHistoryClick(movie: MovieDetailsDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
                     .add(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
-                            putParcelable(MovieDetailFragment.KEY_MOVIE, convertMovieDetailDtoToMovieDto(movie))
+                            putParcelable(
+                                MovieDetailFragment.KEY_MOVIE,
+                                convertMovieDetailDtoToMovieDto(movie)
+                            )
                         })
                     )
                     .addToBackStack("")
@@ -41,7 +49,11 @@ class HistoryMovieFragment : Fragment() {
         fun newInstance() = HistoryMovieFragment()
     }
 
-    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy { ViewModelProvider(this).get(HistoryAndFavoriteMovieViewModel::class.java) }
+    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy {
+        ViewModelProvider(
+            this
+        ).get(HistoryAndFavoriteMovieViewModel::class.java)
+    }
     private var _binding: HistoryMovieFragmentBinding? = null
     private val binding: HistoryMovieFragmentBinding
         get(): HistoryMovieFragmentBinding {
@@ -51,7 +63,7 @@ class HistoryMovieFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = HistoryMovieFragmentBinding.inflate(inflater, container, false)
         setupRecyclerView()
         return binding.root
@@ -67,20 +79,24 @@ class HistoryMovieFragment : Fragment() {
     private fun setupRecyclerView() {
         val layoutManagerHistory =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-            binding.rvMoviesHistory.layoutManager = layoutManagerHistory
+        binding.rvMoviesHistory.layoutManager = layoutManagerHistory
 
 
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelAndFavorite.getLiveData().observe(viewLifecycleOwner, {renderData(it)})
+        viewModelAndFavorite.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModelAndFavorite.getAllMoviesHistory()
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+            is AppState.Error -> Toast.makeText(
+                requireActivity(),
+                "Ошибка загрузки",
+                Toast.LENGTH_SHORT
+            ).show()
             is AppState.SuccessHistory -> {
                 with(binding) {
                     rvMoviesHistory.adapter = historyAndFavoriteAdapter

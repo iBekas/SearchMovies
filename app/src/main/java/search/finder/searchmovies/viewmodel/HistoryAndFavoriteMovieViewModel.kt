@@ -3,7 +3,6 @@ package search.finder.searchmovies.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import search.finder.searchmovies.app.App
-import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.repository.LocalRepositoryImpl
 
 class HistoryAndFavoriteMovieViewModel(
@@ -27,10 +26,4 @@ class HistoryAndFavoriteMovieViewModel(
     fun getAllMoviesFavorite() {
         liveDataObserver.value = AppState.SuccessFavorite(historyRepository.getAllFavoriteMovies())
     }
-
-    fun deleteFavoriteMovie(movie: MovieDetailsDTO) {
-        historyRepository.deleteFavoriteMovie(movie)
-        liveDataObserver.value = AppState.SuccessHistory(historyRepository.getAllFavoriteMovies())
-    }
-
 }

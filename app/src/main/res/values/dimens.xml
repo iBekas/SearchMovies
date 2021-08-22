@@ -17,4 +17,5 @@
     <dimen name="card_margin_all">5dp</dimen>
     <dimen name="card_and_fragment_elevation">20dp</dimen>
     <dimen name="detail_fragment_margin">16dp</dimen>
+    <dimen name="margin_history_favorite">100dp</dimen>
 </resources>

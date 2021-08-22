@@ -59,14 +59,26 @@ class MainActivity : AppCompatActivity() {
             }
             R.id.favorite -> {
                 supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                    .add(R.id.fragment_container, FavoriteFragment.newInstance()).addToBackStack("").commit()
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
+                    .add(R.id.fragment_container, FavoriteFragment.newInstance()).addToBackStack("")
+                    .commit()
                 return true
             }
             R.id.history -> {
                 supportFragmentManager.beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
-                    .add(R.id.fragment_container, HistoryMovieFragment.newInstance()).addToBackStack("").commit()
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
+                    .add(R.id.fragment_container, HistoryMovieFragment.newInstance())
+                    .addToBackStack("").commit()
                 return true
             }
         }

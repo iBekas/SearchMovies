@@ -7,8 +7,6 @@
     android:layout_margin="@dimen/card_margin_all"
     android:layout_marginEnd="@dimen/card_margin"
     android:elevation="@dimen/card_and_fragment_elevation"
-    android:outlineAmbientShadowColor="@color/green"
-    android:outlineSpotShadowColor="@color/green"
     app:cardCornerRadius="@dimen/card_radius"
     app:cardElevation="@dimen/card_elevation"
     app:contentPadding="5dp"
@@ -21,12 +19,18 @@
         android:layout_marginEnd="@dimen/margin_before_border"
         android:orientation="vertical">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/movie_img"
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="@dimen/pic_movie_height"
             android:layout_weight="1"
-            android:src="@drawable/movie_example" />
+            app:cardCornerRadius="@dimen/card_radius">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/movie_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/movie_example" />
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/movie_title"

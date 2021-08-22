@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
@@ -31,7 +30,12 @@ class MainFragment : Fragment() {
             override fun onItemViewClick(movie: MovieDTO) {
                 activity?.supportFragmentManager?.apply {
                     beginTransaction()
-                        .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                        .setCustomAnimations(
+                            R.anim.enter_fragment,
+                            R.anim.exit_fragment,
+                            R.anim.enter_fragment_in,
+                            R.anim.exit_fragment_out
+                        )
                         .add(
                             R.id.fragment_container,
                             MovieDetailFragment.newInstance(Bundle().apply {
@@ -46,7 +50,7 @@ class MainFragment : Fragment() {
                 intent.action = ACTION_SEND_MOVIE_TITLE
                 intent.putExtra(SEND_MOVIE_TITLE, movieTitleToSend)
                 intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
-                context?.let { it.sendBroadcast(intent) }
+                context?.sendBroadcast(intent)
             }
         })
 
@@ -55,7 +59,12 @@ class MainFragment : Fragment() {
         override fun onItemViewClick(movie: MovieDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
                     .add(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
@@ -113,14 +122,18 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.getLiveData().observe(viewLifecycleOwner, Observer { renderData(it) })
+        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", true)
         viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", false)
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+            is AppState.Error -> Toast.makeText(
+                requireActivity(),
+                "Ошибка загрузки",
+                Toast.LENGTH_SHORT
+            ).show()
             is AppState.SuccessUpcoming -> {
                 with(binding) {
                     movieLoading.visibility = View.GONE

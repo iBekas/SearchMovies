@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.SearchMovies" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/green</item>
+        <item name="colorPrimary">@color/light_grey</item>
         <item name="colorPrimaryVariant">@color/light_grey</item>
         <item name="colorOnPrimary">@color/light_grey</item>
         <!-- Secondary brand color. -->
