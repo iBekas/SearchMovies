@@ -33,3 +33,22 @@ interface FavoriteMovieDao {
     @Delete
     fun deleteFavoriteMovie(movie: FavoriteMovieEntity)
 }
+
+@Dao
+interface MainMovieDao {
+
+    @Query("SELECT * FROM table_main_movies")
+    fun getAllMainMovies(): List<MainMovieEntity>
+
+    @Query("SELECT * FROM table_favorite_movies WHERE title LIKE '%' || :movieTitle || '%'")
+    fun showMainMovieByTitle(movieTitle: String): List<MainMovieEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertMainMovies(movies: List<MainMovieEntity>)
+
+//    @Query("INSERT INTO table_main_movies")
+//    fun insertMainMovies(movies: List<MainMovieEntity>)
+
+    @Query("DELETE FROM table_main_movies")
+    fun deleteMainMovies()
+}

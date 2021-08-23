@@ -1,14 +1,10 @@
 package search.finder.searchmovies.repository
 
 import search.finder.searchmovies.model.MovieDetailsDTO
-import search.finder.searchmovies.room.FavoriteMovieDao
-import search.finder.searchmovies.room.MovieDao
-import search.finder.searchmovies.utils.convertEntityToMovieFavorite
-import search.finder.searchmovies.utils.convertEntityToMovieHistory
-import search.finder.searchmovies.utils.convertMovieFavoriteToEntity
-import search.finder.searchmovies.utils.convertMovieHistoryToEntity
+import search.finder.searchmovies.room.*
+import search.finder.searchmovies.utils.*
 
-class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMovieDao: FavoriteMovieDao) : LocalRepository {
+class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMovieDao: FavoriteMovieDao, private val mainMovieDao: MainMovieDao) : LocalRepository {
     override fun getAllMoviesHistory(): List<MovieDetailsDTO> {
         return convertEntityToMovieHistory(movieDao.getAllHistory())
     }
@@ -39,5 +35,21 @@ class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMo
 
     override fun deleteFavoriteMovie(movie: MovieDetailsDTO) {
         favoriteMovieDao.deleteFavoriteMovie(convertMovieFavoriteToEntity(movie))
+    }
+
+    override fun getAllMainMovies(): List<MovieDetailsDTO> {
+        return convertEntityToMovieMain(mainMovieDao.getAllMainMovies())
+    }
+
+    override fun showMainMovieByTitle(movieTitle: String): List<MovieDetailsDTO> {
+        return convertEntityToMovieMain(mainMovieDao.showMainMovieByTitle(movieTitle))
+    }
+
+    override fun saveMainMovies(movies: List<MovieDetailsDTO>) {
+//        mainMovieDao.insertMainMovies(convertMovieMainToEntity(movies))
+    }
+
+    override fun deleteMainMovies() {
+
     }
 }

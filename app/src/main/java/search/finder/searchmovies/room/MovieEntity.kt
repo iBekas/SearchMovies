@@ -43,3 +43,22 @@ import kotlinx.android.parcel.Parcelize
         @ColumnInfo(name = "adult")
         val adult: Boolean
     ): Parcelable
+
+@Parcelize
+@Entity(tableName = "table_main_movies")
+data class MainMovieEntity(
+    @PrimaryKey
+    val movieId: Long,
+    @ColumnInfo(name = "release_date")
+    val releaseDate: String = "",
+    @ColumnInfo(name = "poster_path")
+    val image: String? = "",
+    @ColumnInfo(name = "title")
+    val title: String = "",
+    @ColumnInfo(name = "overview")
+    val overview: String = "",
+    @ColumnInfo(name = "vote_average")
+    val voteAverage: Double = 0.0,
+    @ColumnInfo(name = "adult")
+    val adult: Boolean
+): Parcelable

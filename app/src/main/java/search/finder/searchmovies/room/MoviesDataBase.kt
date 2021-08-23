@@ -7,4 +7,5 @@ import androidx.room.RoomDatabase
 abstract class MoviesDataBase: RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun favoriteMovieDao(): FavoriteMovieDao
+    abstract fun mainMovieDao(): MainMovieDao
 }

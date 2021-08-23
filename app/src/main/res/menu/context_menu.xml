@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/favorite"
-        android:icon="@android:drawable/star_big_on"
+        android:icon="@drawable/ic_star_for_menu"
         android:orderInCategory="10"
         android:title="@string/favorite"
         app:showAsAction="always" />
@@ -22,7 +22,6 @@
         app:showAsAction="never" />
     <item
         android:id="@+id/settings"
-        android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="30"
         android:title="@string/settings"
         app:showAsAction="never" />

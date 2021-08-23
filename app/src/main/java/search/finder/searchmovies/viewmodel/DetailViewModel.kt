@@ -16,7 +16,8 @@ class DetailViewModel(
     private val repository: DetailRepositoryImpl = DetailRepositoryImpl(RemoteDataSource()),
     private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
         App.getMovieDao(),
-        App.getFavoriteMovieDao()
+        App.getFavoriteMovieDao(),
+        App.getMainMovieDao()
     )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
