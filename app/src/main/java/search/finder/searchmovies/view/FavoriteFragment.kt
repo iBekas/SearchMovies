@@ -1,10 +1,9 @@
 package search.finder.searchmovies.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +15,7 @@ import search.finder.searchmovies.view.adapter.HistoryAndFavoriteAdapter
 import search.finder.searchmovies.view.adapter.OnHistoryOrFavoriteItemClick
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.HistoryAndFavoriteMovieViewModel
+
 
 class FavoriteFragment : Fragment() {
 
@@ -54,6 +54,7 @@ class FavoriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FavoriteFragmentBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         setupRecyclerView()
         return binding.root
     }
@@ -89,6 +90,23 @@ class FavoriteFragment : Fragment() {
             }
             else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search, menu)
+        val search = menu.findItem(R.id.search)
+        val searchView: SearchView = search.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                return false
+            }
+        })
     }
 
 }
