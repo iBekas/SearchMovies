@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.ContentMainBinding
+import search.finder.searchmovies.view.contentprovider.ContactsFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,8 +50,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.sort -> {
-                makeText(this, "Сортируем", Toast.LENGTH_SHORT).show()
+            R.id.contacts -> {
+                supportFragmentManager.beginTransaction()
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
+                    .add(R.id.fragment_container, ContactsFragment.newInstance()).addToBackStack("")
+                    .commit()
                 return true
             }
             R.id.settings -> {

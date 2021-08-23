@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">SearchMovies</string>
-    <string name="sort">Сортировать</string>
+    <string name="contacts">Контакты</string>
     <string name="settings">Настройки</string>
     <string name="favorite">Избранное</string>
     <string name="search">Поиск</string>
@@ -11,5 +11,4 @@
     <string name="success_now">Выпущенные фильмы загружены</string>
     <string name="success_upcoming">Будущие фильмы загружены</string>
     <string name="History_movie">История просмотров</string>
-    <string name="contacts">Контакты</string>
 </resources>

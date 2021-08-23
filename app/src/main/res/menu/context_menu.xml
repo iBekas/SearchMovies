@@ -25,7 +25,7 @@
     <item
         android:id="@+id/contacts"
         android:orderInCategory="20"
-        android:title="@string/sort"
+        android:title="@string/contacts"
         app:showAsAction="never" />
     <item
         android:id="@+id/settings"
