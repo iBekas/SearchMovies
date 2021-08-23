@@ -24,11 +24,19 @@ class FavoriteFragment : Fragment() {
         override fun onItemHistoryClick(movie: MovieDetailsDTO) {
             activity?.supportFragmentManager?.apply {
                 beginTransaction()
-                    .setCustomAnimations(R.anim.enter_fragment, R.anim.exit_fragment, R.anim.enter_fragment_in, R.anim.exit_fragment_out)
+                    .setCustomAnimations(
+                        R.anim.enter_fragment,
+                        R.anim.exit_fragment,
+                        R.anim.enter_fragment_in,
+                        R.anim.exit_fragment_out
+                    )
                     .add(
                         R.id.fragment_container,
                         MovieDetailFragment.newInstance(Bundle().apply {
-                            putParcelable(MovieDetailFragment.KEY_MOVIE, convertMovieDetailDtoToMovieDto(movie))
+                            putParcelable(
+                                MovieDetailFragment.KEY_MOVIE,
+                                convertMovieDetailDtoToMovieDto(movie)
+                            )
                         })
                     )
                     .addToBackStack("")
@@ -41,8 +49,11 @@ class FavoriteFragment : Fragment() {
         fun newInstance() = FavoriteFragment()
     }
 
-    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy { ViewModelProvider(this).get(
-        HistoryAndFavoriteMovieViewModel::class.java) }
+    private val viewModelAndFavorite: HistoryAndFavoriteMovieViewModel by lazy {
+        ViewModelProvider(this).get(
+            HistoryAndFavoriteMovieViewModel::class.java
+        )
+    }
     private var _binding: FavoriteFragmentBinding? = null
     private val binding: FavoriteFragmentBinding
         get(): FavoriteFragmentBinding {
@@ -75,13 +86,17 @@ class FavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModelAndFavorite.getLiveData().observe(viewLifecycleOwner, {renderData(it)})
+        viewModelAndFavorite.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         viewModelAndFavorite.getAllMoviesFavorite()
     }
 
     private fun renderData(appState: AppState) {
         when (appState) {
-            is AppState.Error -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+            is AppState.Error -> Toast.makeText(
+                requireActivity(),
+                "Ошибка загрузки",
+                Toast.LENGTH_SHORT
+            ).show()
             is AppState.SuccessFavorite -> {
                 with(binding) {
                     rvMoviesFavorite.adapter = historyAndFavoriteAdapter
@@ -98,12 +113,13 @@ class FavoriteFragment : Fragment() {
         val searchView: SearchView = search.actionView as SearchView
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-
+                binding.rvMoviesFavorite.adapter = historyAndFavoriteAdapter
+                historyAndFavoriteAdapter.setMovies(viewModelAndFavorite.showFavoriteMovieByTitle(query ?: ""))
                 return false
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-
+                viewModelAndFavorite.getAllMoviesFavorite()
                 return false
             }
         })

@@ -23,8 +23,6 @@ class MainViewModel(
         else repository.getMovieFromServerUpcoming(api, language, callBackUpcoming)
     }
 
-
-
     private val callBackNow = object : Callback<NowPlayingDTO> {
         override fun onResponse(call: Call<NowPlayingDTO>, response: Response<NowPlayingDTO>) {
             val serverResponse: NowPlayingDTO? = response.body()
@@ -38,7 +36,6 @@ class MainViewModel(
             liveDataObserver.postValue(AppState.Error(NullPointerException())) //TODO что-то адекватное
         }
     }
-
 
     private val callBackUpcoming = object : Callback<UpcomingDTO> {
         override fun onResponse(call: Call<UpcomingDTO>, response: Response<UpcomingDTO>) {

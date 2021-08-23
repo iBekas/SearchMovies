@@ -1,10 +1,9 @@
 package search.finder.searchmovies.view
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -65,6 +64,7 @@ class HistoryMovieFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = HistoryMovieFragmentBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         setupRecyclerView()
         return binding.root
     }
@@ -105,6 +105,24 @@ class HistoryMovieFragment : Fragment() {
             }
             else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search, menu)
+        val search = menu.findItem(R.id.search)
+        val searchView: SearchView = search.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.rvMoviesHistory.adapter = historyAndFavoriteAdapter
+                historyAndFavoriteAdapter.setMovies(viewModelAndFavorite.showHistoryMovieByTitle(query ?: ""))
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                viewModelAndFavorite.getAllMoviesHistory()
+                return false
+            }
+        })
     }
 
 }

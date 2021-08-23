@@ -21,8 +21,16 @@ class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMo
         movieDao.deleteAllMoviesHistory()
     }
 
+    override fun showHistoryMovieByTitle(movieTitle: String): List<MovieDetailsDTO> {
+        return convertEntityToMovieFavorite(movieDao.showHistoryMovieByTitle(movieTitle))
+    }
+
     override fun getAllFavoriteMovies(): List<MovieDetailsDTO> {
         return convertEntityToMovieFavorite(favoriteMovieDao.getAllFavoriteMovies())
+    }
+
+    override fun showFavoriteMovieByTitle(movieTitle: String): List<MovieDetailsDTO> {
+        return convertEntityToMovieFavorite(favoriteMovieDao.showFavoriteMovieByTitle(movieTitle))
     }
 
     override fun saveFavorite(movie: MovieDetailsDTO) {

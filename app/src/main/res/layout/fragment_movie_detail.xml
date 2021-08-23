@@ -59,6 +59,7 @@
             android:layout_marginBottom="@dimen/margin_fab"
             android:scaleType="center"
             android:tint="@null"
+            app:maxImageSize="@dimen/fab_icon_size"
             android:src="@drawable/ic_plus"
             app:elevation="0dp"
             app:fabSize="mini" />
@@ -71,6 +72,7 @@
             android:layout_marginBottom="@dimen/margin_fab"
             android:scaleType="center"
             android:tint="@null"
+            app:maxImageSize="@dimen/fab_icon_size"
             android:src="@drawable/ic_minus"
             app:elevation="0dp"
             app:fabSize="mini" />

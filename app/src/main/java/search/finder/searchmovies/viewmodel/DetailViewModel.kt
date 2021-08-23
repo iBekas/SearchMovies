@@ -24,8 +24,7 @@ class DetailViewModel(
     fun saveMovieHistoryToDb(movie: MovieDetailsDTO) = localRepository.saveMovieHistory(movie)
 
     fun saveFavoriteMovieToDb(movie: MovieDetailsDTO) = localRepository.saveFavorite(movie)
-    fun deleteFavoriteMovieFromDb(movie: MovieDetailsDTO) =
-        localRepository.deleteFavoriteMovie(movie)
+    fun deleteFavoriteMovieFromDb(movie: MovieDetailsDTO) = localRepository.deleteFavoriteMovie(movie)
 
 
     fun getMovieFromRemoteSource(id: Long, api: String, language: String) {
