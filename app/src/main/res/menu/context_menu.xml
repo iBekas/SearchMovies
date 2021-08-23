@@ -23,7 +23,7 @@
         app:showAsAction="never" />
 
     <item
-        android:id="@+id/sort"
+        android:id="@+id/contacts"
         android:orderInCategory="20"
         android:title="@string/sort"
         app:showAsAction="never" />
