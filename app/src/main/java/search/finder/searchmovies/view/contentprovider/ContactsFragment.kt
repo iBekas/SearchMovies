@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.AlertDialog
 import android.content.Context
 import android.database.Cursor
+import android.net.Uri
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.view.LayoutInflater
@@ -20,7 +21,6 @@ class ContactsFragment : Fragment() {
         get() :FragmentContactsBinding = _binding!!
     private val contactsAdapter: ContactsAdapter = ContactsAdapter()
     private val contacts: MutableList<Contact> = ArrayList(10)
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -121,6 +121,7 @@ class ContactsFragment : Fragment() {
                     }
                 }
             }
+            cursor?.close()
         }
     }
 
@@ -133,6 +134,5 @@ class ContactsFragment : Fragment() {
         private const val REQUEST_CODE_FOR_CONTACTS = 1
         fun newInstance() = ContactsFragment()
     }
-
 
 }

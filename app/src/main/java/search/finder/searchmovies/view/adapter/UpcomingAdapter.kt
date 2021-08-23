@@ -45,7 +45,7 @@ class UpcomingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
                 with(movie) {
                     if (isAdult) movie_adult_img_upcoming.visibility = View.VISIBLE
                     itemView.findViewById<AppCompatImageView>(R.id.movie_img_upcoming).load(
-                        TMDB_MOVIE_POSTER_URL + poster_path
+                        "$TMDB_MOVIE_POSTER_URL$poster_path"
                     )
                     findViewById<TextView>(R.id.movie_title_upcoming).text = title
                     findViewById<TextView>(R.id.movie_expect_data_upcoming).text =

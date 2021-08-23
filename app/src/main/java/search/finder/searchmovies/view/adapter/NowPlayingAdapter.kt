@@ -45,7 +45,7 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
             with(itemView) {
                 with(movie) {
                     if (isAdult) movie_adult_img.visibility = View.VISIBLE
-                    findViewById<AppCompatImageView>(R.id.movie_img).load(TMDB_MOVIE_POSTER_URL + poster_path)
+                    findViewById<AppCompatImageView>(R.id.movie_img).load("$TMDB_MOVIE_POSTER_URL$poster_path")
                     findViewById<TextView>(R.id.movie_title).text = title
                     findViewById<TextView>(R.id.movie_release_year).text =
                         release_date.substring(0, 4)
