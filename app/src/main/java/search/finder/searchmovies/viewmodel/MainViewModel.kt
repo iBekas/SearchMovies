@@ -7,7 +7,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import search.finder.searchmovies.app.App
 import search.finder.searchmovies.model.MovieDTO
-import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.model.NowPlayingDTO
 import search.finder.searchmovies.model.UpcomingDTO
 import search.finder.searchmovies.repository.LocalRepositoryImpl
@@ -21,19 +20,24 @@ class MainViewModel(
     private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
         App.getMovieDao(),
         App.getFavoriteMovieDao(),
-        App.getMainMovieDao()
+        App.getNowPlayingMovieDao(),
+        App.getUpcomingMovieDao()
     )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
 
     fun saveNowPlayingMoviesToDb(movies: List<MovieDTO>) = localRepository.saveNowPlayingMovies(movies)
-
     fun deleteNowPlayingMovies() = localRepository.deleteNowPlayingMovies()
-
     fun showNowPlayingMovieByTitle(movieTitle: String) = localRepository.showNowPlayingMovieByTitle(movieTitle)
-
     fun getNowPlayingMoviesFromDb() {
         liveDataObserver.value = AppState.SuccessNow(localRepository.getAllNowPlayingMovies())
+    }
+
+    fun saveUpcomingMoviesToDb(movies: List<MovieDTO>) = localRepository.saveUpcomingMovies(movies)
+    fun deleteUpcomingMovies() = localRepository.deleteUpcomingMovies()
+    fun showUpcomingMovieByTitle(movieTitle: String) = localRepository.showUpcomingMovieByTitle(movieTitle)
+    fun getUpcomingMoviesFromDb() {
+        liveDataObserver.value = AppState.SuccessUpcoming(localRepository.getAllUpcomingMovies())
     }
 
     fun getMoviesFromRemoteSource(api: String, language: String, isNow: Boolean) {

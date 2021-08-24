@@ -5,7 +5,11 @@ import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.room.*
 import search.finder.searchmovies.utils.*
 
-class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMovieDao: FavoriteMovieDao, private val nowPlayingDao: NowPlayingDao) : LocalRepository {
+class LocalRepositoryImpl(private val movieDao: MovieDao,
+                          private val favoriteMovieDao: FavoriteMovieDao,
+                          private val nowPlayingDao: NowPlayingDao,
+                          private val upcomingDao: UpcomingDao
+                          ) : LocalRepository {
     override fun getAllMoviesHistory(): List<MovieDetailsDTO> {
         return convertEntityToMovieHistory(movieDao.getAllHistory())
     }
@@ -44,4 +48,19 @@ class LocalRepositoryImpl(private val movieDao: MovieDao, private val favoriteMo
     override fun deleteNowPlayingMovies() {
         nowPlayingDao.deleteNowPlayingMovies()
     }
+
+    override fun getAllUpcomingMovies(): List<MovieDTO> {
+        return convertEntityToMovieUpcoming(upcomingDao.getAllUpcomingMovies())
+    }
+    override fun showUpcomingMovieByTitle(movieTitle: String): List<MovieDTO> {
+        return convertEntityToMovieUpcoming(upcomingDao.showUpcomingMovieByTitle(movieTitle))
+    }
+    override fun saveUpcomingMovies(movies: List<MovieDTO>) {
+        upcomingDao.insertUpcomingMovies(convertMovieUpcomingToEntity(movies))
+    }
+    override fun deleteUpcomingMovies() {
+        upcomingDao.deleteUpcomingMovies()
+    }
+
+
 }

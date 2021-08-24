@@ -94,6 +94,7 @@ class MainFragment : Fragment() {
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
         viewModel.deleteNowPlayingMovies()
+        viewModel.deleteUpcomingMovies()
     }
 
     companion object {
@@ -141,6 +142,7 @@ class MainFragment : Fragment() {
                     movieLoading.visibility = View.GONE
                     rvMoviesUpcoming.adapter = upcomingAdapter
                     upcomingAdapter.setMovies(appState.dataMovies)
+                    viewModel.saveUpcomingMoviesToDb(appState.dataMovies)
                     root.snackBarShow(R.string.success_now, Snackbar.LENGTH_LONG)
                 }
             }
@@ -172,6 +174,8 @@ class MainFragment : Fragment() {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.rvMovies.adapter = nowPlayingAdapter
                 nowPlayingAdapter.setMovies(viewModel.showNowPlayingMovieByTitle(query ?: ""))
+                binding.rvMoviesUpcoming.adapter = upcomingAdapter
+                upcomingAdapter.setMovies(viewModel.showUpcomingMovieByTitle(query ?: ""))
                 return false
             }
 
@@ -181,6 +185,7 @@ class MainFragment : Fragment() {
         })
         searchView.setOnCloseListener {
             viewModel.getNowPlayingMoviesFromDb()
+            viewModel.getUpcomingMoviesFromDb()
             false
         }
     }

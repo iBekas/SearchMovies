@@ -2,10 +2,7 @@ package search.finder.searchmovies.app
 
 import android.app.Application
 import androidx.room.Room
-import search.finder.searchmovies.room.FavoriteMovieDao
-import search.finder.searchmovies.room.NowPlayingDao
-import search.finder.searchmovies.room.MovieDao
-import search.finder.searchmovies.room.MoviesDataBase
+import search.finder.searchmovies.room.*
 
 class App : Application() {
 
@@ -19,35 +16,27 @@ class App : Application() {
         private var nameDB = "Movies"
 
         fun getMovieDao():MovieDao{
-            if(db ==null){
-                val builder = Room.databaseBuilder(
-                    appInstance!!.applicationContext,
-                    MoviesDataBase::class.java,
-                    nameDB
-                )
-                db = builder
-                    .allowMainThreadQueries()
-                    .build()
-            }
+            checkDb()
             return db!!.movieDao()
         }
 
         fun getFavoriteMovieDao():FavoriteMovieDao{
-            if(db ==null){
-                val builder = Room.databaseBuilder(
-                    appInstance!!.applicationContext,
-                    MoviesDataBase::class.java,
-                    nameDB
-                )
-                db = builder
-                    .allowMainThreadQueries()
-                    .build()
-            }
+            checkDb()
             return db!!.favoriteMovieDao()
         }
 
-        fun getMainMovieDao():NowPlayingDao{
-            if(db ==null){
+        fun getNowPlayingMovieDao():NowPlayingDao{
+            checkDb()
+            return db!!.nowPlayingDao()
+        }
+
+        fun getUpcomingMovieDao():UpcomingDao{
+            checkDb()
+            return db!!.upcomingDao()
+        }
+
+        private fun checkDb() {
+            if (db == null) {
                 val builder = Room.databaseBuilder(
                     appInstance!!.applicationContext,
                     MoviesDataBase::class.java,
@@ -57,9 +46,6 @@ class App : Application() {
                     .allowMainThreadQueries()
                     .build()
             }
-            return db!!.nowPlayingDao()
         }
-
-
     }
 }

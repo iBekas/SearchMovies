@@ -17,7 +17,8 @@ class DetailViewModel(
     private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
         App.getMovieDao(),
         App.getFavoriteMovieDao(),
-        App.getMainMovieDao()
+        App.getNowPlayingMovieDao(),
+        App.getUpcomingMovieDao()
     )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver

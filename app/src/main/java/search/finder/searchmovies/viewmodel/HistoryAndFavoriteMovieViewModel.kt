@@ -3,7 +3,6 @@ package search.finder.searchmovies.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import search.finder.searchmovies.app.App
-import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.repository.LocalRepositoryImpl
 
 class HistoryAndFavoriteMovieViewModel(
@@ -11,7 +10,8 @@ class HistoryAndFavoriteMovieViewModel(
     private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
         App.getMovieDao(),
         App.getFavoriteMovieDao(),
-        App.getMainMovieDao()
+        App.getNowPlayingMovieDao(),
+        App.getUpcomingMovieDao()
     )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver

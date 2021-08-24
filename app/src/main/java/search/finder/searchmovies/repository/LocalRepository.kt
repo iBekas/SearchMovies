@@ -1,7 +1,11 @@
 package search.finder.searchmovies.repository
 
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
+import androidx.room.Query
 import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
+import search.finder.searchmovies.room.NowPlayingEntity
 
 interface LocalRepository {
     fun getAllMoviesHistory(): List<MovieDetailsDTO>
@@ -18,4 +22,9 @@ interface LocalRepository {
     fun showNowPlayingMovieByTitle(movieTitle: String): List<MovieDTO>
     fun saveNowPlayingMovies(movies: List<MovieDTO>)
     fun deleteNowPlayingMovies()
+
+    fun getAllUpcomingMovies(): List<MovieDTO>
+    fun showUpcomingMovieByTitle(movieTitle: String): List<MovieDTO>
+    fun saveUpcomingMovies(movies: List<MovieDTO>)
+    fun deleteUpcomingMovies()
 }

@@ -5,6 +5,7 @@ import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.room.FavoriteMovieEntity
 import search.finder.searchmovies.room.MovieEntity
 import search.finder.searchmovies.room.NowPlayingEntity
+import search.finder.searchmovies.room.UpcomingEntity
 
 fun convertEntityToMovieHistory(movieEntity: List<MovieEntity>): List<MovieDetailsDTO> {
     return movieEntity.map {
@@ -87,6 +88,25 @@ fun convertEntityToMovieNowPlaying(movieEntity: List<NowPlayingEntity>): List<Mo
         )
     }
 }
+fun convertEntityToMovieUpcoming(movieEntity: List<UpcomingEntity>): List<MovieDTO> {
+    return movieEntity.map {
+        MovieDTO(
+            it.adult!!,
+            "",
+            null,
+            it.movieId,
+            "",
+            "",
+            it.overview,
+            0.0,
+            it.image!!,
+            it.releaseDate,
+            it.title,
+            false,
+            it.voteAverage,
+        )
+    }
+}
 fun convertMovieHistoryToEntity(movie: MovieDetailsDTO): MovieEntity {
     return MovieEntity(
         movie.id,
@@ -112,6 +132,19 @@ fun convertMovieFavoriteToEntity(movie: MovieDetailsDTO): FavoriteMovieEntity {
 fun convertMovieNowPlayingToEntity(movies: List<MovieDTO>): List<NowPlayingEntity> {
     return movies.map{
         NowPlayingEntity(
+            it.id,
+            it.release_date,
+            it.poster_path,
+            it.title,
+            it.overview,
+            it.vote_average,
+            it.adult
+        )
+    }
+}
+fun convertMovieUpcomingToEntity(movies: List<MovieDTO>): List<UpcomingEntity> {
+    return movies.map{
+        UpcomingEntity(
             it.id,
             it.release_date,
             it.poster_path,

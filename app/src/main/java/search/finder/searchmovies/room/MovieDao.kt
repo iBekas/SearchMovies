@@ -46,9 +46,22 @@ interface NowPlayingDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNowPlayingMovies(movies: List<NowPlayingEntity>)
 
-//    @Query("INSERT INTO table_main_movies")
-//    fun insertMainMovies(movies: List<MainMovieEntity>)
-
     @Query("DELETE FROM table_now_playing_movies")
     fun deleteNowPlayingMovies()
+}
+
+@Dao
+interface UpcomingDao {
+
+    @Query("SELECT * FROM table_upcoming_movies")
+    fun getAllUpcomingMovies(): List<UpcomingEntity>
+
+    @Query("SELECT * FROM table_upcoming_movies WHERE title LIKE '%' || :movieTitle || '%'")
+    fun showUpcomingMovieByTitle(movieTitle: String): List<UpcomingEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertUpcomingMovies(movies: List<UpcomingEntity>)
+
+    @Query("DELETE FROM table_upcoming_movies")
+    fun deleteUpcomingMovies()
 }
