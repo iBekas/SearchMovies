@@ -45,8 +45,8 @@ import kotlinx.android.parcel.Parcelize
     ): Parcelable
 
 @Parcelize
-@Entity(tableName = "table_main_movies")
-data class MainMovieEntity(
+@Entity(tableName = "table_now_playing_movies")
+data class NowPlayingEntity(
     @PrimaryKey
     val movieId: Long,
     @ColumnInfo(name = "release_date")

@@ -35,20 +35,20 @@ interface FavoriteMovieDao {
 }
 
 @Dao
-interface MainMovieDao {
+interface NowPlayingDao {
 
-    @Query("SELECT * FROM table_main_movies")
-    fun getAllMainMovies(): List<MainMovieEntity>
+    @Query("SELECT * FROM table_now_playing_movies")
+    fun getAllNowPlayingMovies(): List<NowPlayingEntity>
 
-    @Query("SELECT * FROM table_favorite_movies WHERE title LIKE '%' || :movieTitle || '%'")
-    fun showMainMovieByTitle(movieTitle: String): List<MainMovieEntity>
+    @Query("SELECT * FROM table_now_playing_movies WHERE title LIKE '%' || :movieTitle || '%'")
+    fun showNowPlayingMovieByTitle(movieTitle: String): List<NowPlayingEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMainMovies(movies: List<MainMovieEntity>)
+    fun insertNowPlayingMovies(movies: List<NowPlayingEntity>)
 
 //    @Query("INSERT INTO table_main_movies")
 //    fun insertMainMovies(movies: List<MainMovieEntity>)
 
-    @Query("DELETE FROM table_main_movies")
-    fun deleteMainMovies()
+    @Query("DELETE FROM table_now_playing_movies")
+    fun deleteNowPlayingMovies()
 }

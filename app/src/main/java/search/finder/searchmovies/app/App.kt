@@ -3,7 +3,7 @@ package search.finder.searchmovies.app
 import android.app.Application
 import androidx.room.Room
 import search.finder.searchmovies.room.FavoriteMovieDao
-import search.finder.searchmovies.room.MainMovieDao
+import search.finder.searchmovies.room.NowPlayingDao
 import search.finder.searchmovies.room.MovieDao
 import search.finder.searchmovies.room.MoviesDataBase
 
@@ -46,7 +46,7 @@ class App : Application() {
             return db!!.favoriteMovieDao()
         }
 
-        fun getMainMovieDao():MainMovieDao{
+        fun getMainMovieDao():NowPlayingDao{
             if(db ==null){
                 val builder = Room.databaseBuilder(
                     appInstance!!.applicationContext,
@@ -57,7 +57,7 @@ class App : Application() {
                     .allowMainThreadQueries()
                     .build()
             }
-            return db!!.mainMovieDao()
+            return db!!.nowPlayingDao()
         }
 
 
