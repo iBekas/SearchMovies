@@ -61,11 +61,6 @@ class FavoriteFragment : Fragment() {
             return _binding!!
         }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        MainFragment().setHasOptionsMenu(false)
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -80,7 +75,6 @@ class FavoriteFragment : Fragment() {
         super.onDestroy()
         _binding = null
         historyAndFavoriteAdapter.removeListener()
-        MainFragment().setHasOptionsMenu(true)
     }
 
     private fun setupRecyclerView() {
@@ -115,6 +109,7 @@ class FavoriteFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.search, menu)
         val search = menu.findItem(R.id.search)
         val searchView: SearchView = search.actionView as SearchView

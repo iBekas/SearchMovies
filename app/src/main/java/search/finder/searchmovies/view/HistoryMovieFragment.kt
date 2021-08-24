@@ -108,6 +108,7 @@ class HistoryMovieFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        menu.clear()
         inflater.inflate(R.menu.search, menu)
         val search = menu.findItem(R.id.search)
         val searchView: SearchView = search.actionView as SearchView
