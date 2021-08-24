@@ -1,5 +1,6 @@
 package search.finder.searchmovies.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
@@ -60,6 +61,11 @@ class FavoriteFragment : Fragment() {
             return _binding!!
         }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        MainFragment().setHasOptionsMenu(false)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -74,6 +80,7 @@ class FavoriteFragment : Fragment() {
         super.onDestroy()
         _binding = null
         historyAndFavoriteAdapter.removeListener()
+        MainFragment().setHasOptionsMenu(true)
     }
 
     private fun setupRecyclerView() {

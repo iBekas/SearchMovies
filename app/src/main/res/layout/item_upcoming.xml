@@ -59,7 +59,6 @@
             android:id="@+id/movie_expect_data_upcoming"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:gravity="center|bottom"
             android:textSize="@dimen/text_size_on_card"
             android:textStyle="bold"
