@@ -16,18 +16,15 @@ class HistoryAndFavoriteMovieViewModel(
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
 
-
     fun getAllMoviesHistory() {
         liveDataObserver.value = AppState.SuccessHistory(localRepository.getAllMoviesHistory())
-    }
-
-    fun deleteMoviesHistory() {
-        localRepository.deleteMoviesHistory()
     }
 
     fun getAllMoviesFavorite() {
         liveDataObserver.value = AppState.SuccessFavorite(localRepository.getAllFavoriteMovies())
     }
+
+    fun deleteMoviesHistory() = localRepository.deleteMoviesHistory()
 
     fun showHistoryMovieByTitle(movieTitle: String) = localRepository.showHistoryMovieByTitle(movieTitle)
 

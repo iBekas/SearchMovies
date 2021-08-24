@@ -2,10 +2,9 @@ package search.finder.searchmovies.view
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,6 +18,7 @@ import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.MainViewModel
+
 
 const val ACTION_SEND_MOVIE_TITLE = "SEND_MOVIE_TITLE"
 const val SEND_MOVIE_TITLE = "MOVIE TITLE"
@@ -93,6 +93,7 @@ class MainFragment : Fragment() {
         _binding = null
         nowPlayingAdapter.removeListener()
         upcomingAdapter.removeListener()
+        viewModel.deleteNowPlayingMovies()
     }
 
     companion object {
@@ -103,6 +104,7 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = MainFragmentBinding.inflate(inflater, container, false)
+        setHasOptionsMenu(true)
         setupRecyclerView()
         return binding.root
     }
@@ -147,6 +149,7 @@ class MainFragment : Fragment() {
                     movieLoading.visibility = View.GONE
                     rvMovies.adapter = nowPlayingAdapter
                     nowPlayingAdapter.setMovies(appState.dataMovies)
+                    viewModel.saveNowPlayingMoviesToDb(appState.dataMovies)
                     root.snackBarShow(R.string.success_upcoming, Snackbar.LENGTH_LONG)
                 }
             }
@@ -159,5 +162,26 @@ class MainFragment : Fragment() {
 
     private fun View.snackBarShow(resourceID: Int, duration: Int) {
         Snackbar.make(this, requireActivity().resources.getString(resourceID), duration).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.search, menu)
+        val search = menu.findItem(R.id.search)
+        val searchView: SearchView = search.actionView as SearchView
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.rvMovies.adapter = nowPlayingAdapter
+                nowPlayingAdapter.setMovies(viewModel.showNowPlayingMovieByTitle(query ?: ""))
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
+        searchView.setOnCloseListener {
+            viewModel.getNowPlayingMoviesFromDb()
+            false
+        }
     }
 }

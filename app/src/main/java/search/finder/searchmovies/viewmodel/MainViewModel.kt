@@ -5,17 +5,36 @@ import androidx.lifecycle.ViewModel
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import search.finder.searchmovies.app.App
+import search.finder.searchmovies.model.MovieDTO
+import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.model.NowPlayingDTO
 import search.finder.searchmovies.model.UpcomingDTO
+import search.finder.searchmovies.repository.LocalRepositoryImpl
 import search.finder.searchmovies.repository.RemoteDataSource
 import search.finder.searchmovies.repository.Repository
 import search.finder.searchmovies.repository.RepositoryImpl
 
 class MainViewModel(
     private val liveDataObserver: MutableLiveData<AppState> = MutableLiveData(),
-    private val repository: Repository = RepositoryImpl(RemoteDataSource())
+    private val repository: Repository = RepositoryImpl(RemoteDataSource()),
+    private val localRepository: LocalRepositoryImpl = LocalRepositoryImpl(
+        App.getMovieDao(),
+        App.getFavoriteMovieDao(),
+        App.getMainMovieDao()
+    )
 ) : ViewModel() {
     fun getLiveData() = liveDataObserver
+
+    fun saveNowPlayingMoviesToDb(movies: List<MovieDTO>) = localRepository.saveNowPlayingMovies(movies)
+
+    fun deleteNowPlayingMovies() = localRepository.deleteNowPlayingMovies()
+
+    fun showNowPlayingMovieByTitle(movieTitle: String) = localRepository.showNowPlayingMovieByTitle(movieTitle)
+
+    fun getNowPlayingMoviesFromDb() {
+        liveDataObserver.value = AppState.SuccessNow(localRepository.getAllNowPlayingMovies())
+    }
 
     fun getMoviesFromRemoteSource(api: String, language: String, isNow: Boolean) {
         liveDataObserver.postValue(AppState.Loading)
