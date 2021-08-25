@@ -24,12 +24,12 @@
             android:layout_height="@dimen/pic_movie_height"
             android:layout_weight="1"
             app:cardCornerRadius="@dimen/card_radius">
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/movie_img"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/movie_example" />
+                android:scaleType="fitXY" />
         </androidx.cardview.widget.CardView>
 
         <TextView

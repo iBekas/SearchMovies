@@ -19,7 +19,7 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
 
     fun setMovies(list: List<MovieDTO>) {
         moviesData = list
-        notifyDataSetChanged()
+        moviesData?.let { notifyDataSetChanged() }
     }
 
     fun removeListener() {
@@ -33,8 +33,10 @@ class NowPlayingAdapter(var onItemViewClickListener: OnItemViewClickListener?) :
     }
 
     override fun onBindViewHolder(holder: NowPlayingHolder, position: Int) {
-        val positionInList: Int = position % moviesData.size
-        holder.init(moviesData[positionInList])
+        if (moviesData.isNotEmpty()) {
+            val positionInList: Int = position % moviesData.size
+            holder.init(moviesData[positionInList])
+        }
     }
 
     override fun getItemCount() = Integer.MAX_VALUE

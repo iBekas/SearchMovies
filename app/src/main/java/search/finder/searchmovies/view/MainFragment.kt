@@ -173,9 +173,9 @@ class MainFragment : Fragment() {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.rvMovies.adapter = nowPlayingAdapter
-                nowPlayingAdapter.setMovies(viewModel.showNowPlayingMovieByTitle(query ?: ""))
+                nowPlayingAdapter.setMovies(viewModel.showNowPlayingMovieByTitle(query ?: " "))
                 binding.rvMoviesUpcoming.adapter = upcomingAdapter
-                upcomingAdapter.setMovies(viewModel.showUpcomingMovieByTitle(query ?: ""))
+                upcomingAdapter.setMovies(viewModel.showUpcomingMovieByTitle(query ?: " "))
                 return false
             }
 
