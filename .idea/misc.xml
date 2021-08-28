@@ -10,6 +10,7 @@
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_baseline_check_circle_outline_24.xml" value="0.5015625" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_baseline_remove_circle_outline_24.xml" value="0.5015625" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_baseline_star_outline_24.xml" value="0.5703125" />
+        <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_earth.xml" value="0.5703125" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_favorite.xml" value="0.5015625" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_movieadult.xml" value="0.5015625" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_star_for_menu.xml" value="0.5703125" />
@@ -17,6 +18,8 @@
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/drawable/ic_star_on.xml" value="0.5703125" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/content_main.xml" value="0.5541666666666667" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/favorite_fragment.xml" value="0.48541666666666666" />
+        <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/fragment_main_maps.xml" value="0.5541666666666667" />
+        <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/fragment_maps.xml" value="0.5541666666666667" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/fragment_movie_detail.xml" value="0.36231884057971014" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/history_movie_fragment.xml" value="0.48541666666666666" />
         <entry key="..\:/JAVA/Android project/SearchMovies/app/src/main/res/layout/item_now_playing.xml" value="0.28489583333333335" />

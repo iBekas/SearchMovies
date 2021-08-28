@@ -12,14 +12,14 @@ interface MoviesAPI {
     fun getMoviesNow(
         @Header(TMDB_API_KEY_NAME) token:String,
         @Query("api_key") api: String,
-        @Query("language") language: String
+        @Query("language") language: String,
     ): Call<NowPlayingDTO>
 
     @GET(TMDB_API_URL_END_POINTER_UPCOMING)
     fun getMoviesUpcoming(
         @Header(TMDB_API_KEY_NAME) token:String,
         @Query("api_key") api: String,
-        @Query("language") language: String
+        @Query("language") language: String,
     ): Call<UpcomingDTO>
 
     @GET (TMDB_API_URL_DETAILS)

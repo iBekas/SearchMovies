@@ -9,11 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
 import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
+import search.finder.searchmovies.view.contentprovider.ContactsFragment
+import search.finder.searchmovies.view.map.MapsFragment
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.DetailViewModel
 
@@ -90,6 +93,17 @@ class MovieDetailFragment : Fragment() {
                     viewModel.deleteFavoriteMovieFromDb(movie)
                     Toast.makeText(requireContext(), "Удалено из избранного", Toast.LENGTH_SHORT)
                         .show()
+                }
+                birthMap.setOnClickListener {
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .setCustomAnimations(
+                            R.anim.enter_fragment,
+                            R.anim.exit_fragment,
+                            R.anim.enter_fragment_in,
+                            R.anim.exit_fragment_out
+                        )
+                        .add(R.id.fragment_container, MapsFragment.newInstance()).addToBackStack("")
+                        .commit()
                 }
             }
         }

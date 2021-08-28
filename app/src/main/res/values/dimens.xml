@@ -18,5 +18,5 @@
     <dimen name="card_and_fragment_elevation">20dp</dimen>
     <dimen name="detail_fragment_margin">16dp</dimen>
     <dimen name="margin_history_favorite">200dp</dimen>
-    <dimen name="fab_icon_size">45dp</dimen>
+    <dimen name="fab_icon_size">40dp</dimen>
 </resources>
