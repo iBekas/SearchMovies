@@ -120,7 +120,6 @@ data class Cast (
     val job: String? = null
 ): Parcelable
 
-@Parcelize
 data class PersonDTO (
     val adult: Boolean,
     val also_known_as: List<String>,
@@ -136,4 +135,4 @@ data class PersonDTO (
     val place_of_birth: String,
     val popularity: Double,
     val profile_path: String
-): Parcelable
+)

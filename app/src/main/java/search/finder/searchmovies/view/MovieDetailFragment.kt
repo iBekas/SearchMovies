@@ -12,10 +12,7 @@ import coil.api.load
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
-import search.finder.searchmovies.model.MovieDTO
-import search.finder.searchmovies.model.MovieDetailsDTO
-import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
-import search.finder.searchmovies.model.TMDB_MOVIE_POSTER_URL
+import search.finder.searchmovies.model.*
 import search.finder.searchmovies.view.contentprovider.ContactsFragment
 import search.finder.searchmovies.view.map.MapsFragment
 import search.finder.searchmovies.viewmodel.AppState
@@ -62,6 +59,7 @@ class MovieDetailFragment : Fragment() {
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
         movie?.let { viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU") }
+        movie?.let { viewModel.getMovieCreditsFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU")}
     }
 
     private fun renderData(appState: AppState) {
@@ -72,7 +70,24 @@ class MovieDetailFragment : Fragment() {
                 Toast.LENGTH_SHORT
             ).show()
             is AppState.SuccessDetail -> setData(appState.dataMovie)
+            is AppState.SuccessCredits -> setCredits(appState.dataMovie)
             else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun setCredits(movie: MovieCreditsDTO) {
+        binding.birthMap.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .setCustomAnimations(
+                    R.anim.enter_fragment,
+                    R.anim.exit_fragment,
+                    R.anim.enter_fragment_in,
+                    R.anim.exit_fragment_out
+                )
+                .add(R.id.fragment_container, MapsFragment.newInstance(Bundle().apply {
+                    putParcelable(MapsFragment.KEY_MOVIE_DETAILS, movie)
+                })).addToBackStack("")
+                .commit()
         }
     }
 
@@ -80,7 +95,7 @@ class MovieDetailFragment : Fragment() {
         viewModel.saveMovieHistoryToDb(movie)
         with(binding) {
             with(movie) {
-                movieImgDetail.load(TMDB_MOVIE_POSTER_URL + poster_path)
+                movieImgDetail.load("$TMDB_MOVIE_POSTER_URL$poster_path")
                 movieTitleDetail.text = title
                 movieDescDetail.text = overview
                 movieReleaseYearDetail.text = release_date
@@ -94,19 +109,6 @@ class MovieDetailFragment : Fragment() {
                     viewModel.deleteFavoriteMovieFromDb(movie)
                     Toast.makeText(requireContext(), "Удалено из избранного", Toast.LENGTH_SHORT)
                         .show()
-                }
-                birthMap.setOnClickListener {
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .setCustomAnimations(
-                            R.anim.enter_fragment,
-                            R.anim.exit_fragment,
-                            R.anim.enter_fragment_in,
-                            R.anim.exit_fragment_out
-                        )
-                        .add(R.id.fragment_container, MapsFragment.newInstance(Bundle().apply {
-                            putParcelable(MapsFragment.KEY_MOVIE_DETAILS, movie)
-                        })).addToBackStack("")
-                        .commit()
                 }
             }
         }

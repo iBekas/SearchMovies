@@ -37,7 +37,6 @@ class DetailViewModel(
 
     fun getPersonFromRemoteSource(id: Long, api: String, language: String) = repository.getPersonFromServer(id, api, language, callBackPerson)
 
-
     private val callBackDetails = object : Callback<MovieDetailsDTO> {
 
         override fun onResponse(call: Call<MovieDetailsDTO>, response: Response<MovieDetailsDTO>) {
@@ -85,6 +84,4 @@ class DetailViewModel(
             liveDataObserver.postValue(AppState.Error(NullPointerException()))
         }
     }
-
-
 }
