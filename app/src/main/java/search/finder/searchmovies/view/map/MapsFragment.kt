@@ -89,7 +89,8 @@ class MapsFragment : Fragment() {
         with(binding) {
             placeOfBirth.text = String.format("%s %s", requireActivity().resources.getString(R.string.Map_title), person.name)
             val geoCoder = Geocoder(context)
-            val address = geoCoder.getFromLocationName(person.place_of_birth, 1)
+            val address = geoCoder.getFromLocationName(person.place_of_birth?: "Pacific Ocean", 1)
+            /*В строке выше, студия просит убрать оператор Элвис, но, в случаях null в месте рождения актера, приложение не падает*/
             val location = LatLng(address[0].latitude, address[0].longitude)
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 5f))
             addMarker(location)
