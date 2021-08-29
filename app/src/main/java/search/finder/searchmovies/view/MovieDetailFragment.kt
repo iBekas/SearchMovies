@@ -103,7 +103,9 @@ class MovieDetailFragment : Fragment() {
                             R.anim.enter_fragment_in,
                             R.anim.exit_fragment_out
                         )
-                        .add(R.id.fragment_container, MapsFragment.newInstance()).addToBackStack("")
+                        .add(R.id.fragment_container, MapsFragment.newInstance(Bundle().apply {
+                            putParcelable(MapsFragment.KEY_MOVIE_DETAILS, movie)
+                        })).addToBackStack("")
                         .commit()
                 }
             }
