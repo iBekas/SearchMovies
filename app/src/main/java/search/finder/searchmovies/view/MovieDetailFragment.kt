@@ -1,7 +1,6 @@
 package search.finder.searchmovies.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +12,6 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.*
-import search.finder.searchmovies.view.contentprovider.ContactsFragment
 import search.finder.searchmovies.view.map.MapsFragment
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.DetailViewModel
