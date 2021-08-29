@@ -24,4 +24,12 @@ class RemoteDataSource {
         moviesAPI.getMovieDetails(TMDB_API_KEY_VALUE, id, api, language).enqueue(callback)
     }
 
+    fun getMovieCredits(id: Long, api: String, language: String, callback: Callback<MovieCreditsDTO>) {
+        moviesAPI.getMovieCredits(TMDB_API_KEY_VALUE, id, api, language).enqueue(callback)
+    }
+
+    fun getPerson(id: Long, api: String, language: String, callback: Callback<PersonDTO>) {
+        moviesAPI.getPerson(TMDB_API_KEY_VALUE, id, api, language).enqueue(callback)
+    }
+
 }

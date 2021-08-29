@@ -29,4 +29,21 @@ interface MoviesAPI {
         @Query("api_key") api: String,
         @Query("language") language: String
     ): Call<MovieDetailsDTO>
+
+    @GET(TMDB_API_URL_CREDITS)
+    fun getMovieCredits(
+        @Header(TMDB_API_KEY_NAME) token:String,
+        @Path("movie_id") movie_id: Long,
+        @Query("api_key") api: String,
+        @Query("language") language: String,
+    ): Call<MovieCreditsDTO>
+
+    @GET(TMDB_API_URL_PERSON)
+    fun getPerson(
+        @Header(TMDB_API_KEY_NAME) token:String,
+        @Path("person_id") person_id: Long,
+        @Query("api_key") api: String,
+        @Query("language") language: String,
+    ): Call<PersonDTO>
+
 }

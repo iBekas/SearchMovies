@@ -22,6 +22,7 @@ class MapsFragment : Fragment() {
         }
 
     companion object {
+        const val KEY_MOVIE_DETAILS = "KEY"
         fun newInstance() = MapsFragment()
     }
 

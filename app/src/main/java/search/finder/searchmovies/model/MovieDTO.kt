@@ -95,3 +95,45 @@ data class SpokenLanguage (
     val name: String
 ): Parcelable
 
+@Parcelize
+data class MovieCreditsDTO (
+    val id: Long,
+    val cast: List<Cast>,
+    val crew: List<Cast>
+): Parcelable
+
+@Parcelize
+data class Cast (
+    val adult: Boolean,
+    val gender: Long,
+    val id: Long,
+    val known_for_department: String,
+    val name: String,
+    val original_name: String,
+    val popularity: Double,
+    val profile_path: String? = null,
+    val cast_id: Long? = null,
+    val character: String? = null,
+    val credit_id: String,
+    val order: Long? = null,
+    val department: String? = null,
+    val job: String? = null
+): Parcelable
+
+@Parcelize
+data class PersonDTO (
+    val adult: Boolean,
+    val also_known_as: List<String>,
+    val biography: String,
+    val birthday: String,
+    val deathday: Any? = null,
+    val gender: Long,
+    val homepage: Any? = null,
+    val id: Long,
+    val imdb_id: String,
+    val known_for_department: String,
+    val name: String,
+    val place_of_birth: String,
+    val popularity: Double,
+    val profile_path: String
+): Parcelable
