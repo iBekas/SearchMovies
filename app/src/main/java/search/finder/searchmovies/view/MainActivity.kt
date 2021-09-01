@@ -3,12 +3,14 @@ package search.finder.searchmovies.view
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import android.widget.Toast.makeText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.android.gms.tasks.OnCompleteListener
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.ContentMainBinding
 import search.finder.searchmovies.view.contentprovider.ContactsFragment
@@ -94,5 +96,4 @@ class MainActivity : AppCompatActivity() {
 
         return super.onOptionsItemSelected(item)
     }
-
 }
