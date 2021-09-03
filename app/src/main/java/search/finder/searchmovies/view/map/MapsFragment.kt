@@ -49,9 +49,6 @@ class MapsFragment : Fragment() {
     private lateinit var map: GoogleMap
     private val callback = OnMapReadyCallback { googleMap ->
         map = googleMap
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
         googleMap.uiSettings.isZoomControlsEnabled = true
     }
 
@@ -75,12 +72,16 @@ class MapsFragment : Fragment() {
 
     private fun renderData(appState: AppState) {
         when (appState) {
+            is AppState.Loading -> binding.mapLoading.visibility = View.VISIBLE
             is AppState.Error -> Toast.makeText(
                 requireActivity(),
                 "Ошибка загрузки",
                 Toast.LENGTH_SHORT
             ).show()
-            is AppState.SuccessPerson -> setData(appState.dataMovie)
+            is AppState.SuccessPerson -> {
+                setData(appState.dataMovie)
+                binding.mapLoading.visibility = View.GONE
+            }
             else -> Toast.makeText(requireActivity(), "Ошибка загрузки", Toast.LENGTH_SHORT).show()
         }
     }

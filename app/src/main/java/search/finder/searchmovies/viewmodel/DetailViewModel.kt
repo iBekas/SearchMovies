@@ -35,7 +35,10 @@ class DetailViewModel(
 
     fun getMovieCreditsFromRemoteSource(id: Long, api: String, language: String) = repository.getMovieCreditsFromServer(id, api, language, callBackCredits)
 
-    fun getPersonFromRemoteSource(id: Long, api: String, language: String) = repository.getPersonFromServer(id, api, language, callBackPerson)
+    fun getPersonFromRemoteSource(id: Long, api: String, language: String){
+        liveDataObserver.postValue(AppState.Loading)
+        repository.getPersonFromServer(id, api, language, callBackPerson)
+    }
 
     private val callBackDetails = object : Callback<MovieDetailsDTO> {
 

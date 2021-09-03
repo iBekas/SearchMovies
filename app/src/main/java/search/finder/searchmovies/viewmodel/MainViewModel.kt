@@ -50,7 +50,7 @@ class MainViewModel(
         override fun onResponse(call: Call<NowPlayingDTO>, response: Response<NowPlayingDTO>) {
             val serverResponse: NowPlayingDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
-                liveDataObserver.postValue(AppState.SuccessNow(serverResponse.results))
+                liveDataObserver.value = AppState.SuccessNow(serverResponse.results)
             } else {
                 liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }
@@ -64,7 +64,7 @@ class MainViewModel(
         override fun onResponse(call: Call<UpcomingDTO>, response: Response<UpcomingDTO>) {
             val serverResponse: UpcomingDTO? = response.body()
             if (response.isSuccessful && serverResponse != null) {
-                liveDataObserver.postValue(AppState.SuccessUpcoming(serverResponse.results))
+                liveDataObserver.value = AppState.SuccessUpcoming(serverResponse.results)
             } else {
                 liveDataObserver.postValue(AppState.Error(NullPointerException()))
             }

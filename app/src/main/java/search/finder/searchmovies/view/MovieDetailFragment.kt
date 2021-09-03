@@ -76,12 +76,6 @@ class MovieDetailFragment : Fragment() {
     private fun setCredits(movie: MovieCreditsDTO) {
         binding.birthMap.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .setCustomAnimations(
-                    R.anim.enter_fragment,
-                    R.anim.exit_fragment,
-                    R.anim.enter_fragment_in,
-                    R.anim.exit_fragment_out
-                )
                 .add(R.id.fragment_container, MapsFragment.newInstance(Bundle().apply {
                     putParcelable(MapsFragment.KEY_MOVIE_DETAILS, movie)
                 })).addToBackStack("")
