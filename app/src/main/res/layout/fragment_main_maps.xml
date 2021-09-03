@@ -24,7 +24,6 @@
             android:ems="7"
             android:gravity="center"
             android:maxLines="2"
-            android:text="Здесь родился Джони Депп"
             android:textColor="@color/black"
             android:textSize="30dp"/>
 

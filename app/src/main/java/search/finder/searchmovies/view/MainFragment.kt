@@ -9,10 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
+import search.finder.searchmovies.BuildConfig
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.MainFragmentBinding
 import search.finder.searchmovies.model.MovieDTO
-import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.view.adapter.NowPlayingAdapter
 import search.finder.searchmovies.view.adapter.OnItemViewClickListener
 import search.finder.searchmovies.view.adapter.UpcomingAdapter
@@ -126,8 +126,8 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
-        viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", true)
-        viewModel.getMoviesFromRemoteSource(TMDB_API_KEY_VALUE, "ru-RU", false)
+        viewModel.getMoviesFromRemoteSource(BuildConfig.TMDB_API_KEY_VALUE, "ru-RU", true)
+        viewModel.getMoviesFromRemoteSource(BuildConfig.TMDB_API_KEY_VALUE, "ru-RU", false)
     }
 
     private fun renderData(appState: AppState) {

@@ -16,11 +16,11 @@ import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
+import search.finder.searchmovies.BuildConfig
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.FragmentMainMapsBinding
 import search.finder.searchmovies.model.MovieCreditsDTO
 import search.finder.searchmovies.model.PersonDTO
-import search.finder.searchmovies.model.TMDB_API_KEY_VALUE
 import search.finder.searchmovies.viewmodel.AppState
 import search.finder.searchmovies.viewmodel.DetailViewModel
 
@@ -66,7 +66,7 @@ class MapsFragment : Fragment() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         val movie = arguments?.getParcelable<MovieCreditsDTO>(KEY_MOVIE_DETAILS)
-        movie?.let{ viewModel.getPersonFromRemoteSource(movie.cast[0].id, TMDB_API_KEY_VALUE, "ru-RU")}
+        movie?.let{ viewModel.getPersonFromRemoteSource(movie.cast[0].id, BuildConfig.TMDB_API_KEY_VALUE, "ru-RU")}
         mapFragment?.getMapAsync(callback)
     }
 

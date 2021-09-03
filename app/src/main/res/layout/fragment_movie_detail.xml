@@ -14,7 +14,9 @@
         android:layout_height="match_parent"
         android:background="@drawable/fragment_corner"
         android:layout_gravity="center"
-        android:layout_margin="@dimen/detail_fragment_margin"
+        android:layout_marginBottom="@dimen/detail_fragment_margin"
+        android:layout_marginEnd="@dimen/detail_fragment_margin"
+        android:layout_marginStart="@dimen/detail_fragment_margin"
         android:elevation="@dimen/card_and_fragment_elevation"
         android:orientation="vertical">
 
@@ -22,8 +24,7 @@
             android:id="@+id/movie_img_detail"
             android:layout_width="match_parent"
             android:layout_height="@dimen/img_height_detail"
-            android:layout_marginTop="@dimen/margin_img"
-            android:src="@drawable/movie_example"/>
+            android:layout_marginTop="@dimen/margin_img" />
 
         <TextView
             android:id="@+id/movie_title_detail"
@@ -32,8 +33,7 @@
             android:gravity="center"
             android:padding="@dimen/text_padding"
             android:textSize="@dimen/head_text_size_detail"
-            android:textStyle="bold"
-            tools:text="Лучший фильм" />
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="match_parent"

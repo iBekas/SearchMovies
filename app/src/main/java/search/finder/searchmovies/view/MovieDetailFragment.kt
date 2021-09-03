@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import coil.api.load
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import search.finder.searchmovies.BuildConfig
 import search.finder.searchmovies.R
 import search.finder.searchmovies.databinding.FragmentMovieDetailBinding
 import search.finder.searchmovies.model.*
@@ -56,8 +57,8 @@ class MovieDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
         val movie = arguments?.getParcelable<MovieDTO>(KEY_MOVIE)
-        movie?.let { viewModel.getMovieFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU") }
-        movie?.let { viewModel.getMovieCreditsFromRemoteSource(movie.id, TMDB_API_KEY_VALUE, "ru-RU")}
+        movie?.let { viewModel.getMovieFromRemoteSource(movie.id, BuildConfig.TMDB_API_KEY_VALUE, "ru-RU") }
+        movie?.let { viewModel.getMovieCreditsFromRemoteSource(movie.id, BuildConfig.TMDB_API_KEY_VALUE, "ru-RU")}
     }
 
     private fun renderData(appState: AppState) {

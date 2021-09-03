@@ -26,6 +26,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildTypes.debug {
+            Properties properties = new Properties()
+            properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+            def apiKey = properties.getProperty("TMDB_API_KEY_VALUE","")
+            it.buildConfigField "String", "TMDB_API_KEY_VALUE", apiKey
+        }
+
+
     buildTypes {
         release {
             minifyEnabled false
