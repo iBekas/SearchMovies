@@ -33,6 +33,25 @@ android {
             it.buildConfigField "String", "TMDB_API_KEY_VALUE", apiKey
         }
 
+    buildTypes.release {
+        Properties properties = new Properties()
+        properties.load(project.rootProject.file("apikey.properties").newDataInputStream())
+        def apiKey = properties.getProperty("TMDB_API_KEY_VALUE","")
+        it.buildConfigField "String", "TMDB_API_KEY_VALUE", apiKey
+    }
+
+    signingConfigs {
+        release {
+            Properties properties = new Properties()
+            properties.load(rootProject.file("password.properties").newDataInputStream())
+            def password = properties.getProperty("password")
+
+            storeFile file("searchMovieKey.jks")
+            storePassword = password
+            keyAlias 'SearchMovies'
+            keyPassword = password
+        }
+    }
 
     buildTypes {
         release {
@@ -55,6 +74,18 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    flavorDimensions 'faith'
+    productFlavors {
+        orthodoxyConfig {
+            dimension 'faith'
+            versionNameSuffix '.orthodoxy'
+        }
+        catholicismConfig {
+            dimension 'faith'
+            versionNameSuffix '.сatholicism'
+        }
     }
 }
 
