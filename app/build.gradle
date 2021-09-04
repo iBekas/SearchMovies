@@ -3,8 +3,8 @@ plugins {
     id 'kotlin-android'
 }
 
-apply plugin:"kotlin-android-extensions"
-apply plugin:"kotlin-kapt"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
 apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
@@ -12,7 +12,7 @@ android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
-    buildFeatures{
+    buildFeatures {
         viewBinding true
     }
 
@@ -36,10 +36,19 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            versionNameSuffix "-debug"
+        }
+        edOption {
+            initWith debug
+            versionNameSuffix "-edOption"
+        }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
