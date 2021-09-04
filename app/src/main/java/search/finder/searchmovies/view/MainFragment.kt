@@ -28,23 +28,7 @@ class MainFragment : Fragment() {
     private val nowPlayingAdapter: NowPlayingAdapter =
         NowPlayingAdapter(object : OnItemViewClickListener {
             override fun onItemViewClick(movie: MovieDTO) {
-                activity?.supportFragmentManager?.apply {
-                    beginTransaction()
-                        .setCustomAnimations(
-                            R.anim.enter_fragment,
-                            R.anim.exit_fragment,
-                            R.anim.enter_fragment_in,
-                            R.anim.exit_fragment_out
-                        )
-                        .add(
-                            R.id.fragment_container,
-                            MovieDetailFragment.newInstance(Bundle().apply {
-                                putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                            })
-                        )
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
+                callDetailFragment(movie)
                 val movieTitleToSend = movie.title
                 val intent = Intent()
                 intent.action = ACTION_SEND_MOVIE_TITLE
@@ -57,23 +41,7 @@ class MainFragment : Fragment() {
     private val upcomingAdapter: UpcomingAdapter = UpcomingAdapter(object :
         OnItemViewClickListener {
         override fun onItemViewClick(movie: MovieDTO) {
-            activity?.supportFragmentManager?.apply {
-                beginTransaction()
-                    .setCustomAnimations(
-                        R.anim.enter_fragment,
-                        R.anim.exit_fragment,
-                        R.anim.enter_fragment_in,
-                        R.anim.exit_fragment_out
-                    )
-                    .add(
-                        R.id.fragment_container,
-                        MovieDetailFragment.newInstance(Bundle().apply {
-                            putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
-                        })
-                    )
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
+            callDetailFragment(movie)
         }
     })
 
@@ -187,6 +155,26 @@ class MainFragment : Fragment() {
             viewModel.getNowPlayingMoviesFromDb()
             viewModel.getUpcomingMoviesFromDb()
             false
+        }
+    }
+
+    private fun callDetailFragment(movie: MovieDTO) {
+        activity?.supportFragmentManager?.apply {
+            beginTransaction()
+                .setCustomAnimations(
+                    R.anim.enter_fragment,
+                    R.anim.exit_fragment,
+                    R.anim.enter_fragment_in,
+                    R.anim.exit_fragment_out
+                )
+                .add(
+                    R.id.fragment_container,
+                    MovieDetailFragment.newInstance(Bundle().apply {
+                        putParcelable(MovieDetailFragment.KEY_MOVIE, movie)
+                    })
+                )
+                .addToBackStack("")
+                .commitAllowingStateLoss()
         }
     }
 }
