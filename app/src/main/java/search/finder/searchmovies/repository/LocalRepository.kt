@@ -1,11 +1,7 @@
 package search.finder.searchmovies.repository
 
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
 import search.finder.searchmovies.model.MovieDTO
 import search.finder.searchmovies.model.MovieDetailsDTO
-import search.finder.searchmovies.room.NowPlayingEntity
 
 interface LocalRepository {
     fun getAllMoviesHistory(): List<MovieDetailsDTO>
